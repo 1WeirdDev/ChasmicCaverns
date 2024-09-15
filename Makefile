@@ -46,3 +46,6 @@ endif
 buildnrun: build run
 rebuild:build_pch build
 rebuildnrun:build_pch build run
+
+push:
+	Push.bat

@@ -53,7 +53,7 @@ void MainMenuScene::Init() {
     Font* font = UIDisplayManager::GetFont("Arial");
     m_TextLabel->SetFont(font);
     ui->CalculateGlobalData();
-    m_TextLabel->SetText("Hello World");
+    m_TextLabel->SetText("FPS: 0");
 
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
@@ -64,7 +64,7 @@ void MainMenuScene::CleanUp() {
 }
 void MainMenuScene::Update() {
     m_Player.Update();
-    m_TextLabel->SetText(std::to_string((int)floor(1.0f / Time::GetDeltaTime())).c_str());
+    m_TextLabel->SetText(std::to_string((int)floor(1.0f /  Time::GetDeltaTime())).c_str());
 }
 void MainMenuScene::Draw() {
     Game::GetShader().Start();
