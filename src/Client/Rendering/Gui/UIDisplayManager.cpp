@@ -79,7 +79,16 @@ void UIDisplayManager::OnWindowResizeEvent(int width, int height){
 void UIDisplayManager::DrawUI(UI* ui, int zIndex){
     Vec2<float>& globalPosition = ui->GetGlobalPosition();
     Vec2<float>& globalSize = ui->GetGlobalSize();
-    
+
+    if(!ui->m_Visible){
+        zIndex+=2;
+        const std::vector<UI*>& children = ui->GetChildren();
+        for (UI* childUI : children){
+            DrawUI(childUI, zIndex);
+        }
+        return;
+    }
+
     glActiveTexture(GL_TEXTURE0);
     s_Texture.Load();
     switch(ui->GetUIType()){
@@ -125,14 +134,12 @@ void UIDisplayManager::DrawUI(UI* ui, int zIndex){
         s_TexturedMesh.BindVao();
         glBindBuffer(GL_SHADER_STORAGE_BUFFER, font->GetCRDBId());
         glBufferSubData(GL_SHADER_STORAGE_BUFFER, 0, sizeof(CharacterRenderData) * count, data);
-        //CORE_DEBUG("FONT SIZE {0}", fontSize);
         s_TexturedMesh.DrawInstancedNoBinding(count);
-        //CORE_DEBUG("DONE DRAWING TEXT LABEL");
     }
     default:
         break;
     }
-    zIndex++;
+    zIndex+=2;
     const std::vector<UI*>& children = ui->GetChildren();
     for (UI* childUI : children){
         DrawUI(childUI, zIndex);

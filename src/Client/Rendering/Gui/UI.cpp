@@ -19,6 +19,7 @@ void UI::SetPosition(float scaleX, float scaleY, uint16_t offsetX, uint16_t offs
     m_Position.m_ScaleY = scaleY;
     m_Position.m_OffsetX = offsetX;
     m_Position.m_OffsetY = offsetY;
+    CalculateGlobalData();
 }
 
 void UI::SetSize(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY){
@@ -26,6 +27,7 @@ void UI::SetSize(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY)
     m_Size.m_ScaleY = scaleY;
     m_Size.m_OffsetX = offsetX;
     m_Size.m_OffsetY = offsetY;
+    CalculateGlobalData();
 }
 void UI::CalculateGlobalData() noexcept{
     m_GlobalPosition.SetData(m_Position.m_ScaleX, m_Position.m_ScaleY);

@@ -34,7 +34,7 @@ void UITextShader::Create(){
     void main(){ \
         vec2 position = vec2(render_data[gl_InstanceID].x, render_data[gl_InstanceID].y);\
         int index = render_data[gl_InstanceID].character; \
-        vec2 char_tex_coords = vec2(glyph_characters[index].x - (0.75 / window_size.y), glyph_characters[index].y - (0.75 / window_size.y)); \n \
+        vec2 char_tex_coords = vec2(glyph_characters[index].x, glyph_characters[index].y); \n \
         float ratio = glyph_characters[index].ratio;\n \
         float texture_atlas_width = fontSize * 10; \
         text_coords = char_tex_coords + (in_text_coord * vec2((fontSize * ratio) / texture_atlas_width, fontSize / texture_atlas_width)); \
@@ -51,7 +51,7 @@ void UITextShader::Create(){
     
     m_ProjectionMatrixLocation = GetUniformLocation("projection_matrix");
     m_WindowSizeLocation = GetUniformLocation("window_size");
-    m_ZIndexLocation = GetUniformLocation("z_index");
+    m_ZIndexLocation = GetUniformLocation("zIndex");
     m_FontSizeLocation = GetUniformLocation("fontSize");
     m_TextColorLocation = GetUniformLocation("text_color");
     m_CharacterGlyphDatasLocation = GetUniformLocation("CharacterGlyphDatas");

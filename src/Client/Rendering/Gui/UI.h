@@ -87,6 +87,7 @@ public:
 public:
     ScreenSizeRestraint m_SizeRestraint;
     int8_t m_ZIndex = 0;
+    bool m_Visible = true;
 protected:
     void CallChildrenWindowResizeEvent(int width, int height);
 protected:

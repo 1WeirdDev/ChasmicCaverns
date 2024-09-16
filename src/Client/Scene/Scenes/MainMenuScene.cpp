@@ -28,32 +28,41 @@ void MainMenuScene::Init() {
     m_Player.Init();
 
     Frame* ui = m_Gui.CreateChild<Frame>();
-    UDim2<float, int16_t>* size = &ui->GetSize();
-    size->m_ScaleX = 0.5f;
-    size->m_ScaleY = 0.5f;
+    ui->SetSize(0.5f, 0.5f, 0, 0);
+    ui->SetPosition(0.5f, 0.5f, 0, 0);
+    //Dim2<float, int16_t>* size = &ui->GetSize();
+    //size->m_ScaleX = 0.5f;
+    //size->m_ScaleY = 0.5f;
 
-    UDim2<float, int16_t>* pos = &ui->GetPosition();
-    pos->m_ScaleX = 0.5;
-    pos->m_ScaleY = 0.25;
+    //UDim2<float, int16_t>* pos = &ui->GetPosition();
+    //pos->m_ScaleX = 0.5;
+    //pos->m_ScaleY = 0.25;
 
-    Frame* child = ui->CreateChild<Frame>();
-    size = &child->GetSize();
-    size->m_ScaleX = 0.5f;
-    size->m_ScaleY = 0.125f;
-    child->m_Color.y = 0;
+    //Frame* child = ui->CreateChild<Frame>();
+    //size = &child->GetSize();
+    //size->m_ScaleX = 0.5f;
+    //size->m_ScaleY = 0.125f;
+    //child->m_Color.y = 0;
 
-    pos = &child->GetPosition();
-    pos->m_OffsetX = 5;
+    //pos = &child->GetPosition();
+    //pos->m_OffsetX = 5;
     
     Image* image = ui->CreateChild<Image>();
     image->SetSize(0.5f, 0.5f,0,0);
     image->SetPosition(-0.5f,0,0,0);
+    image->m_Visible = true;
 
-    m_TextLabel = ui->CreateChild<TextLabel>();
+    image = image->CreateChild<Image>();
+    image->SetSize(0.5f, 0.5f,0,0);
+    image->SetPosition(0,0,0,0);
+    image->m_Visible = true;
+
+    m_TextLabel = image->CreateChild<TextLabel>();
     Font* font = UIDisplayManager::GetFont("Arial");
     m_TextLabel->SetFont(font);
     ui->CalculateGlobalData();
     m_TextLabel->SetText("FPS: 0");
+    m_TextLabel->m_ZIndex = 0;
 
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
