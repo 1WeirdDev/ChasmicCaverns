@@ -2,6 +2,7 @@
 #include "Gui.h"
 
 #include "UIDisplayManager.h"
+#include "Input/Input.h"
 
 Gui::Gui(){}
 Gui::~Gui(){CleanUp();}
@@ -35,6 +36,14 @@ void Gui::RemoveButtonReference(Button* button){
 
 bool Gui::OnMouseButtonEvent(int button, bool isDown){
     for(size_t i = 0; i < m_Buttons.size(); i++){
+        float mouseX = Input::GetMouseNormalizedX();
+        float mouseY = Input::GetMouseNormalizedY();
+
+        Vec2<float> pos = m_Buttons[i]->GetGlobalPosition();
+        Vec2<float> scale = m_Buttons[i]->GetGlobalSize();
+        
+        if(mouseX < pos.x || mouseX >= pos.x + scale.x || mouseY < pos.y || mouseY >= pos.y + scale.y)continue;
+
         const std::vector<MouseButtonCallback>& callbacks = m_Buttons[i]->GetMouseButtonCallbacks();
         for(size_t j = 0; j < callbacks.size(); j++){
             if(callbacks[j](button, isDown))

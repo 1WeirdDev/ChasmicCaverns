@@ -95,6 +95,10 @@ void Window::Init(){
         Input::OnKeyEvent(key, keyAction, modifiers);
     });
 
+    glfwSetCursorPosCallback(s_Window, [](GLFWwindow* window, double xPos, double yPos){
+        Input::OnMouseMoveEvent(xPos, Window::s_Data.m_Height - yPos - 1);
+    });
+
     glfwSetWindowFocusCallback(s_Window, [](GLFWwindow* window, int focused){
         if(focused == GL_FALSE){
             Input::OnWindowLostFocus();
