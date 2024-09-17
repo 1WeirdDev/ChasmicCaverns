@@ -76,7 +76,7 @@ void Font::LoadFont(const char *location)
         if (x + width + 1 >= image_width)
         {
             x = 0;
-            y += m_FontSize;
+            y += m_FontSize + 1;
         }
         
         Vec2<float> pos((float)x / (float)image_width, (float)(y) / (float)image_width);

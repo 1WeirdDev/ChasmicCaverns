@@ -8,10 +8,10 @@
 
 #include "Rendering/Gui/Gui.h"
 
-class MainMenuScene : public Scene{
+class GameScene : public Scene{
 public:
-    MainMenuScene();
-    ~MainMenuScene();
+    GameScene();
+    ~GameScene();
 
     void Init() override;
     void CleanUp() override;
@@ -21,5 +21,8 @@ public:
     bool OnMouseButtonEvent(int button, bool isDown) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
+    Player m_Player;
+    BasicMesh m_BasicMesh;
     Gui m_Gui;
+    TextLabel* m_TextLabel = nullptr;
 };

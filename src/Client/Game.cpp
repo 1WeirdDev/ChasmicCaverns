@@ -22,7 +22,7 @@ void Game::Init(){
     SceneManager::Init();
 
     s_Shader.CreateWithSource("#version 330 core\n in vec3 vertex; uniform mat4 proj_matrix; uniform mat4 view_matrix; \n void main(){gl_Position = proj_matrix * view_matrix * vec4(vertex, 1.0);}",
-    "#version 330 core\n out vec4 color; void main() {color = vec4(0.5, 0.5, 0.5, 1.0);}");
+    "#version 330 core\n out vec4 color; void main() {color = vec4(1.0, 0.5, 0.5, 1.0);}");
     s_Shader.Start();
 
     s_ProjMatrix.SetIdentity();

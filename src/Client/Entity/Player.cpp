@@ -12,7 +12,7 @@ void Player::CleanUp(){
 
 }
 void Player::Update(){
-    m_Position.x += Time::GetDeltaTime() * 0.5f;
+    //m_Position.x += Time::GetDeltaTime() * 0.5f;
     
     Game::GetShader().Start();
     m_ViewMatrix.SetIdentity();
