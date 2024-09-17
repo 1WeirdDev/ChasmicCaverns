@@ -23,14 +23,14 @@ public:
     void CleanUp();
     void LoadFont(const char* location);
 
-    const char* GetName() const {return m_Name;}
-    const char* GetLocation() const {return m_Location;}
+    const char* GetName() const noexcept {return m_Name;}
+    const char* GetLocation() const noexcept {return m_Location;}
 
-    UITextShader GetShader() const{return m_Shader;}
-    GLuint GetTextureId() const {return m_TextureId;}
-    uint16_t GetFontSize() const {return m_FontSize;}
-    GLuint GetSSBOId() const {return m_SSBO_Id;}
-    GLuint GetCRDBId() const {return m_CRDB_Id;}
+    UITextShader GetShader() const noexcept {return m_Shader;}
+    GLuint GetTextureId() const noexcept {return m_TextureId;}
+    uint16_t GetFontSize() const noexcept {return m_FontSize;}
+    GLuint GetSSBOId() const noexcept {return m_SSBO_Id;}
+    GLuint GetCRDBId() const noexcept {return m_CRDB_Id;}
 public:
     std::array<GlyphCharacter, 128> m_Characters;
 private:

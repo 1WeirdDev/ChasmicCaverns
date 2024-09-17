@@ -10,7 +10,7 @@ public:
     void LoadFromPath(const char* path);
     void CleanUp();
 
-    void Load() const;
+    void Load() const noexcept;
 
 private:
     GLuint m_TextureId = 0;

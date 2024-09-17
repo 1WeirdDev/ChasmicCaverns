@@ -30,7 +30,7 @@ public:
     static Font* CreateFont(const char* fontName, const char* fontPath);
     static Font* GetFont(const char* fontName);
 public:
-    static TexturedMesh& GetTexturedMesh() {return s_TexturedMesh;}
+    static TexturedMesh& GetTexturedMesh() noexcept {return s_TexturedMesh;}
 private:
     static UIFrameShader s_FrameShader;
     static UIImageShader s_ImageShader;

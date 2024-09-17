@@ -46,6 +46,6 @@ void Texture::CleanUp(){
     glDeleteTextures(1, &m_TextureId);
 }
 
-void Texture::Load() const{
+void Texture::Load() const noexcept {
     glBindTexture(GL_TEXTURE_2D, m_TextureId);
 }

@@ -86,15 +86,15 @@ public:
     /// @brief Will update the members global size and position data for rendering and updates and starts a chain that updates the descendants after
     void CalculateGlobalData() noexcept;
 
-    size_t GetChildCount() const {return m_Children.size();}
+    size_t GetChildCount() const noexcept {return m_Children.size();}
     UI* GetParent() const noexcept{return m_Parent;}
     //Vec2<float>& GetPosition() const noexcept {return (Vec2<float>&)m_Position;}
     UDim2<float, int16_t>& GetPosition() const noexcept {return (UDim2<float, int16_t>&)m_Position;}
     UDim2<float, int16_t>& GetSize() const noexcept {return (UDim2<float, int16_t>&)m_Size;}
     UIType GetUIType() const noexcept{return m_UIType;}
 
-    Vec2<float>& GetGlobalSize() const{return (Vec2<float>&)m_GlobalSize;}
-    Vec2<float>& GetGlobalPosition() const{return (Vec2<float>&)m_GlobalPosition;}
+    Vec2<float>& GetGlobalSize() const noexcept{return (Vec2<float>&)m_GlobalSize;}
+    Vec2<float>& GetGlobalPosition() const noexcept{return (Vec2<float>&)m_GlobalPosition;}
 
     const std::vector<UI*>& GetChildren() const noexcept{ return m_Children;}
 public:
