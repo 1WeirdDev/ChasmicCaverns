@@ -42,10 +42,9 @@ void Input::OnMouseMoveEvent(double xPos, double yPos){
     s_MouseDeltaY = s_MousePosY - s_LastMousePosY;
     s_LastMousePosX = s_MousePosX;
     s_LastMousePosY = s_MousePosY;
-    
+
     s_MouseNormalizedX = (float)xPos / (float)Window::GetWidth();
     s_MouseNormalizedY = (float)yPos / (float)Window::GetHeight();
-
 }
 void Input::OnKeyEvent(int key, KeyAction action, unsigned char modifiers){
     Game::OnKeyEvent(key, action, modifiers);
