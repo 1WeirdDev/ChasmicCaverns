@@ -2,9 +2,10 @@
 
 #include "Core.h"
 #include "Window.h"
-#include "Core/Logger.h"
-#include "Game.h"
 #include "Input/Input.h"
+#include "Core/Logger.h"
+#include "Core/Time.h"
+#include "Game.h"
 
 WindowData Window::s_Data;
 bool Window::s_IsOpen;
@@ -22,8 +23,11 @@ void Window::Init(){
         std::exit(-1);
     }
 
+    //Only not resizable because of resizing stopping events
+    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    //glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
     s_Window = glfwCreateWindow(s_Data.m_Width, s_Data.m_Height, "Chasmic Caverns", nullptr, nullptr);
     s_AspectRatio = (float)s_Data.m_Width / (float)s_Data.m_Height;
     s_InverseAspectRatio = (float)s_Data.m_Height / (float)s_Data.m_Width;
@@ -89,6 +93,25 @@ void Window::Init(){
         if(mods & GLFW_MOD_SHIFT > 0)
             modifiers |= KeyModifierBit::LeftShift;
         Input::OnKeyEvent(key, keyAction, modifiers);
+    });
+
+    glfwSetWindowFocusCallback(s_Window, [](GLFWwindow* window, int focused){
+        if(focused == GL_FALSE){
+            Input::OnWindowLostFocus();
+        }
+        Game::OnWindowFocusCallback(focused);
+    });
+
+    glfwSetWindowPosCallback(s_Window, [](GLFWwindow*, int xPos, int yPos){
+        Game::OnWindowPosCallback(xPos, yPos);
+    });
+
+    //FUCK FRAME BUFFER RESIZE EVENTS 
+    glfwSetFramebufferSizeCallback(s_Window, [](GLFWwindow* window, int width, int height){
+        Time::Update();
+    });
+    glfwSetMouseButtonCallback(s_Window, [](GLFWwindow* window, int button, int action, int mods){
+        Input::OnMouseButtonEvent(button, action == GLFW_PRESS);
     });
 
     glEnable(GL_DEPTH_TEST);

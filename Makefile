@@ -38,7 +38,7 @@ build:
 	$(CC) $(Files) $(CFlags) $(Defines) $(IncludeDirs) /Yupch.h /Fp$(INT_DIR)pch.pch 
 	$(LK) $(LFlags) $(LibDirs) $(Libs)
 run:
-ifeq ($(Configuration), Dist)
+ifneq ($(Configuration), Dist)
 	gdb -ex run -ex quit -ex "set args $(ProgramArgs)" $(OUTPUT_DIR)$(TargetName).exe
 else
 	$(OUTPUT_DIR)$(TargetName).exe

@@ -3,7 +3,7 @@
 
 #include "Rendering/Window.h"
 #include "Core/Logger.h"
-UI::UI() : m_Position(0,0,0,0), m_GlobalPosition(0,0), m_GlobalSize(1,1){}
+UI::UI(Gui* gui) : m_Position(0,0,0,0), m_GlobalPosition(0,0), m_GlobalSize(1,1), m_UIType(UT_None) {m_Gui = gui;}
 UI::~UI(){}
 
 
@@ -28,6 +28,27 @@ void UI::SetSize(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY)
     m_Size.m_OffsetX = offsetX;
     m_Size.m_OffsetY = offsetY;
     CalculateGlobalData();
+}
+UI* UI::GetChild(size_t index) const{
+    if(index < 0 || index >= m_Children.size())return nullptr;
+    return m_Children[index];
+}
+void UI::RemoveChild(UI* ui){
+    for(size_t i = 0; i < m_Children.size(); i++){
+        if(m_Children[i] == ui){
+            m_Children.erase(m_Children.begin() + i);
+            return;
+        }
+    }
+}
+void UI::DeleteChild(UI* ui){
+    for(size_t i = 0; i < m_Children.size(); i++){
+        if(m_Children[i] == ui){
+            delete ui;
+            m_Children.erase(m_Children.begin() + i);
+            return;
+        }
+    }
 }
 void UI::CalculateGlobalData() noexcept{
     m_GlobalPosition.SetData(m_Position.m_ScaleX, m_Position.m_ScaleY);

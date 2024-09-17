@@ -4,10 +4,10 @@
 #include "Rendering/Window.h"
 #include "Core/Logger.h"
 
-TextLabel::TextLabel() : m_TextColor(1.0f, 0.0f, 0.0f){
+TextLabel::TextLabel(class Gui* gui) : UI(gui), m_TextColor(1.0f, 1.0f, 1.0f){
     m_UIType = UT_TextLabel; 
 }
-TextLabel::TextLabel(Font* font) noexcept{
+TextLabel::TextLabel(class Gui* gui, Font* font) : UI(gui) {
     m_Font = font;
 }
 TextLabel::~TextLabel(){

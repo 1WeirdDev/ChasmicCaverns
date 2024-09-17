@@ -6,8 +6,8 @@
 #include "Core/Logger.h"
 #include "Rendering/Gui/UIs/Frame.h"
 #include "Rendering/Gui/UIs/Image.h"
+#include "Rendering/Gui/UIs/Button.h"
 #include "Rendering/Gui/UIDisplayManager.h"
-
 MainMenuScene::MainMenuScene(){}
 MainMenuScene::~MainMenuScene(){
 
@@ -56,14 +56,21 @@ void MainMenuScene::Init() {
     image->SetSize(0.5f, 0.5f,0,0);
     image->SetPosition(0,0,0,0);
     image->m_Visible = true;
+    ui->CalculateGlobalData();
+
+    Button* b = image->CreateChild<Button>();
+    b->AddMouseButtonCallback([](int button, bool isDown){
+        CORE_DEBUG("BUTTON CALLBACK");
+        return false;
+    });
 
     m_TextLabel = image->CreateChild<TextLabel>();
     Font* font = UIDisplayManager::GetFont("Arial");
     m_TextLabel->SetFont(font);
-    ui->CalculateGlobalData();
     m_TextLabel->SetText("FPS: 0");
     m_TextLabel->m_ZIndex = 0;
 
+    CORE_DEBUG("CHILD COUNT {0}", image->GetChildCount());
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
 void MainMenuScene::CleanUp() {
@@ -82,6 +89,9 @@ void MainMenuScene::Draw() {
     m_Gui.Draw();
 }
 
+bool MainMenuScene::OnMouseButtonEvent(int button, bool isDown){
+    return m_Gui.OnMouseButtonEvent(button, isDown);
+}
 void MainMenuScene::OnWindowResizeEvent(int width, int height){
     m_Gui.OnWindowResizeEvent(width, height);
 }

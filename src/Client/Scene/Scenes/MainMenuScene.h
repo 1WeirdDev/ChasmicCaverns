@@ -17,7 +17,8 @@ public:
     void CleanUp() override;
     void Update() override;
     void Draw() override;
-
+    
+    bool OnMouseButtonEvent(int button, bool isDown) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
     Player m_Player;

@@ -6,8 +6,8 @@
 
 class TextLabel : public UI{
 public:
-    TextLabel();
-    TextLabel(Font* font) noexcept;
+    TextLabel(class Gui* gui);
+    TextLabel(class Gui* gui, Font* font);
     ~TextLabel();
 
     void SetFont(Font* font);

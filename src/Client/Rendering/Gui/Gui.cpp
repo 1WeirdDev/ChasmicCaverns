@@ -4,13 +4,14 @@
 #include "UIDisplayManager.h"
 
 Gui::Gui(){}
-Gui::~Gui(){}
+Gui::~Gui(){CleanUp();}
 
 void Gui::CleanUp(){
     for(size_t i = 0; i < m_Children.size(); i++){
         delete m_Children[i];
     }
     m_Children.resize(0);
+    m_Buttons.resize(0);
 }
 
 void Gui::Draw() const{
@@ -19,6 +20,31 @@ void Gui::Draw() const{
     }
 }
 
+void Gui::AddButtonReference(Button* button){
+    m_Buttons.push_back(button);
+}
+
+void Gui::RemoveButtonReference(Button* button){
+    for(size_t i = 0; i < m_Buttons.size(); i++){
+        if(m_Buttons[i] == button){
+            m_Buttons.erase(m_Buttons.begin() + i);
+            return;
+        }
+    }
+}
+
+bool Gui::OnMouseButtonEvent(int button, bool isDown){
+    for(size_t i = 0; i < m_Buttons.size(); i++){
+        const std::vector<MouseButtonCallback>& callbacks = m_Buttons[i]->GetMouseButtonCallbacks();
+        for(size_t j = 0; j < callbacks.size(); j++){
+            if(callbacks[j](button, isDown))
+                return false;
+        }
+    }
+
+    //TODO: sort
+    return false;
+}
 void Gui::OnWindowResizeEvent(int width, int height){
     for(size_t i = 0; i < m_Children.size(); i++){
         m_Children[i]->CalculateGlobalData();

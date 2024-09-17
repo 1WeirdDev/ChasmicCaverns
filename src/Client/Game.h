@@ -18,6 +18,8 @@ public:
     static void OnWindowResizeEvent(int width, int height);
     static void OnWindowPosCallback(int xPos, int yPos);
 
+    static void OnWindowFocusCallback(bool focused);
+    static void OnMouseButtonEvent(int button, bool isDown);
     static void OnKeyEvent(int key, KeyAction action, unsigned char modifiers);
 
     static const Shader& GetShader() noexcept {return s_Shader;}

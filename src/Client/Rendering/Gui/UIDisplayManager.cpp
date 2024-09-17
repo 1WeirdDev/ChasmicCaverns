@@ -121,13 +121,12 @@ void UIDisplayManager::DrawUI(UI* ui, int zIndex){
 
         shader.Start();
         uint16_t fontSize = font->GetFontSize();
-        float font_height_in_pixels = (float)fontSize;
         shader.Start();
         shader.LoadFontSize(fontSize);
         shader.LoadZIndex(zIndex + textLabel->m_ZIndex);
         shader.LoadTextColor(textLabel->m_TextColor.x, textLabel->m_TextColor.y, textLabel->m_TextColor.z);
         glBindTexture(GL_TEXTURE_2D, font->GetTextureId());
-        unsigned int count = textLabel->GetCharacterRenderDataCount();
+        uint32_t count = textLabel->GetCharacterRenderDataCount();
         CharacterRenderData* data = textLabel->GetCharacterRenderData();
 
         if(count == 0 || data == nullptr)break;

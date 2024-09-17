@@ -23,7 +23,7 @@ Files += $(RENDERING_SRC)TexturedMesh.cpp $(RENDERING_SRC)BasicMesh.cpp
 Files += $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
 #GUI
 GUI_DIR = $(SRC_DIR)Rendering/Gui/
-Files += $(GUI_DIR)Font.cpp $(GUI_DIR)UIDisplayManager.cpp $(GUI_DIR)UI.cpp $(GUI_DIR)UIS/TextLabel.cpp $(GUI_DIR)Gui.cpp
+Files += $(GUI_DIR)Font.cpp $(GUI_DIR)UIDisplayManager.cpp $(GUI_DIR)UI.cpp $(GUI_DIR)UIS/TextLabel.cpp $(GUI_DIR)Gui.cpp $(GUI_DIR)UIs/Button.cpp
 Defines += /DUSE_OPENGL /DUSE_SPDLOG
 
 IncludeDirs += /Ilibs/stb/include/ /Ilibs/Freetype/include/ /Ilibs/glew-2.2.0/include/ /Ilibs/GLFW3.4/x64/include/ 

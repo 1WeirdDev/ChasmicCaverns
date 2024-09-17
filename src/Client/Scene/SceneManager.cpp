@@ -37,6 +37,13 @@ bool SceneManager::RemoveScene(Scene* scene){
     return false;
 }
 
+bool SceneManager::OnMouseButtonEvent(int button, bool isDown){
+    for(size_t i = 0; i < s_Scenes.size(); i++){
+        if(s_Scenes[i]->OnMouseButtonEvent(button, isDown))
+            return true;
+    }
+    return false;
+}
 void SceneManager::OnWindowResizeEvent(int width, int height){
     for(size_t i = 0; i < s_Scenes.size(); i++){
         s_Scenes[i]->OnWindowResizeEvent(width, height);

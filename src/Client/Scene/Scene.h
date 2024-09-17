@@ -11,5 +11,6 @@ public:
     virtual void Update();
     virtual void Draw();
 
+    virtual bool OnMouseButtonEvent(int button, bool isDown);
     virtual void OnWindowResizeEvent(int width, int height);
 };

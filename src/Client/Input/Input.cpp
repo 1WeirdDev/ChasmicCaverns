@@ -20,3 +20,15 @@ void Input::Update(){
 void Input::OnKeyEvent(int key, KeyAction action, unsigned char modifiers){
     Game::OnKeyEvent(key, action, modifiers);
 }
+
+void Input::OnMouseButtonEvent(int button, bool isDown){
+    Game::OnMouseButtonEvent(button, isDown);
+}
+void Input::OnWindowLostFocus(){
+    for(size_t i = 0; i < s_Keys.size(); i++){
+        if(s_Keys[i] > 0){
+            Game::OnKeyEvent(i, KeyAction::Release, 0);
+            s_Keys[i] = 0;
+        }
+    }
+}
