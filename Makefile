@@ -2,7 +2,7 @@
 #Arch can be [x64]
 Platform = Windows
 Type = Client
-Configuration = Dist
+Configuration = Release
 TargetName = ChasmicCaverns
 Arch = x64
 

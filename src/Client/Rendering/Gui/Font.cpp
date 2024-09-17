@@ -34,7 +34,7 @@ void Font::LoadFont(const char *location)
     if (FT_New_Face(ft, location, 0, &face))
     {
         CORE_DEBUG(("ERROR::FREETYPE: Failed to load font " + std::string(location)).c_str());
-        MESSAGE_BOX("Freetype", ("ERROR::FREETYPE: Failed to load font " + std::string(location)).c_str());
+        MESSAGE_BOX("Freetype", "ERROR::FREETYPE: Failed to load font ");
         std::exit(-1);
     }
 

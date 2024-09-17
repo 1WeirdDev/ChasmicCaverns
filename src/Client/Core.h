@@ -2,8 +2,8 @@
 
 #include "pch.h"
 
-#ifdef Dist
+#ifdef DIST
 #define MESSAGE_BOX(title, message)
 #else
-#define MESSAGE_BOX(title, message) MessageBoxW(NULL, (LPCWSTR)L##message, (LPCWSTR)L##title, MB_ICONERROR | MB_YESNO);  
+#define MESSAGE_BOX(title, message) MessageBoxW(NULL, L##message, L##title, MB_ICONERROR | MB_YESNO);  
 #endif

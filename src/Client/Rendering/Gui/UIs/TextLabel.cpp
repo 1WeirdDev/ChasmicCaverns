@@ -4,7 +4,7 @@
 #include "Rendering/Window.h"
 #include "Core/Logger.h"
 
-TextLabel::TextLabel(class Gui* gui) : UI(gui), m_TextColor(1.0f, 1.0f, 1.0f){
+TextLabel::TextLabel(class Gui* gui) : UI(gui), m_TextColor(0.0f, 0.0f, 0.0f){
     m_UIType = UT_TextLabel; 
 }
 TextLabel::TextLabel(class Gui* gui, Font* font) : UI(gui) {
@@ -52,7 +52,7 @@ void TextLabel::Update(){
 
     unsigned char row_count = 1;
     bool ignore_center = false;
-    
+    bool endedOnNewLine = false;
     for(unsigned int i = 0; i < m_StringLength; i++){
         char c = m_Text[i];
         GlyphCharacter glyph = m_Font->m_Characters.at(c);
@@ -65,6 +65,7 @@ void TextLabel::Update(){
             //Spaces only matter if followed by character
             pos_x += space_advance;
             space_advance = 0;
+            endedOnNewLine = false;
             if(pos_x + advance >= global_pos.x + global_size.x || c == '\n'){
                 //Center last rows text
                 float offset = (global_size.x - (row_width - global_pos.x));
@@ -81,7 +82,8 @@ void TextLabel::Update(){
                         break;
                     }
                 }
-                
+
+                endedOnNewLine = true;
                 row_count++;
 
                 pos_x = global_pos.x;
@@ -100,6 +102,30 @@ void TextLabel::Update(){
             m_DataCount++;
         }
     }
+    if(endedOnNewLine)return;
+    float offset = (global_size.x - (row_width - global_pos.x));
+    switch(m_HorizontalAlignmentMode){
+        case UI_HAM_Middle:{
+            for(unsigned int s = last_row_start; s < m_DataCount; s++)
+                m_RenderData[s].m_PositionX += offset / 2.0f;
+        }
+    }
+
+    //Centering on y axis
+    float font_global_height = ((float)(m_Font->GetFontSize() + 15) / (float)Window::GetHeight());
+    offset = 0;
+    switch(m_VerticalAlignmentMode){
+        case UI_VAM_Middle:{
+            offset = (global_size.y - (font_global_height * ((float)row_count))) / 2.0f;// + font_global_height * (row_count - 1);
+            break;
+        }
+        case UI_VAM_Bottom:{
+            offset = (global_size.y - (font_global_height * ((float)row_count)));// + font_global_height * (row_count - 1);
+            break;
+        }
+    }
+    for(uint32_t i = 0; i < m_DataCount; i++)
+        m_RenderData[i].m_PositionY -= offset;
 }
 void TextLabel::OnWindowResizeEvent(int width, int height){
     Update();

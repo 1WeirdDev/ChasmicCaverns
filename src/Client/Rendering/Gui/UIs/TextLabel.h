@@ -29,7 +29,6 @@ public:
     unsigned char m_OverflowMode = UI_OM_Wrap;
     unsigned char m_HorizontalAlignmentMode = UI_HAM_Middle;
     unsigned char m_VerticalAlignmentMode = UI_VAM_Middle;
-    float text_scale = 1.0f;
     bool text_scaled = true;  //Makes the text always fit the labels size, disabled multi lines
 private:
     Font* m_Font = nullptr;

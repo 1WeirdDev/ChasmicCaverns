@@ -8,6 +8,8 @@
 #include "Rendering/Gui/UIs/Image.h"
 #include "Rendering/Gui/UIs/Button.h"
 #include "Rendering/Gui/UIDisplayManager.h"
+#include "Scene/SceneManager.h"
+
 MainMenuScene::MainMenuScene(){}
 MainMenuScene::~MainMenuScene(){
 
@@ -27,50 +29,29 @@ void MainMenuScene::Init() {
 
     m_Player.Init();
 
-    Frame* ui = m_Gui.CreateChild<Frame>();
-    ui->SetSize(0.5f, 0.5f, 0, 0);
-    ui->SetPosition(0.5f, 0.5f, 0, 0);
-    //Dim2<float, int16_t>* size = &ui->GetSize();
-    //size->m_ScaleX = 0.5f;
-    //size->m_ScaleY = 0.5f;
+    UI* parent = m_Gui.CreateChild<UI>();
+    parent->SetSize(0.25f, 0.25f, 0, 0);
+    parent->SetPosition(0.5f, 0.5f, 0, 0);
+    parent->m_Visible = false;
 
-    //UDim2<float, int16_t>* pos = &ui->GetPosition();
-    //pos->m_ScaleX = 0.5;
-    //pos->m_ScaleY = 0.25;
+    Frame* frame = parent->CreateChild<Frame>();
+    frame->SetSize(0.5f, 0.5f, 0, 0);
+    frame->SetPosition(-0.25f, -0.25f, 0, 0);
 
-    //Frame* child = ui->CreateChild<Frame>();
-    //size = &child->GetSize();
-    //size->m_ScaleX = 0.5f;
-    //size->m_ScaleY = 0.125f;
-    //child->m_Color.y = 0;
+    TextLabel* textLabel = frame->CreateChild<TextLabel>();
+    textLabel->SetFont(UIDisplayManager::GetFont("RobotoRegular"));
+    textLabel->SetText("Play");
+    textLabel->CalculateGlobalData();
 
-    //pos = &child->GetPosition();
-    //pos->m_OffsetX = 5;
-    
-    Image* image = ui->CreateChild<Image>();
-    image->SetSize(0.5f, 0.5f,0,0);
-    image->SetPosition(-0.5f,0,0,0);
-    image->m_Visible = true;
-
-    image = image->CreateChild<Image>();
-    image->SetSize(0.5f, 0.5f,0,0);
-    image->SetPosition(0,0,0,0);
-    image->m_Visible = true;
-    ui->CalculateGlobalData();
-
-    Button* b = image->CreateChild<Button>();
-    b->AddMouseButtonCallback([](int button, bool isDown){
-        CORE_DEBUG("BUTTON CALLBACK");
+    Button* b = frame->CreateChild<Button>();
+    b->AddMouseButtonCallback([this](int button, bool isDown){
+        if(button == 0){
+            SceneManager::DeleteScene(this);
+            return true;
+        }
         return false;
     });
-
-    m_TextLabel = image->CreateChild<TextLabel>();
-    Font* font = UIDisplayManager::GetFont("Arial");
-    m_TextLabel->SetFont(font);
-    m_TextLabel->SetText("FPS: 0");
-    m_TextLabel->m_ZIndex = 0;
-
-    CORE_DEBUG("CHILD COUNT {0}", image->GetChildCount());
+    
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
 void MainMenuScene::CleanUp() {
@@ -80,7 +61,7 @@ void MainMenuScene::CleanUp() {
 }
 void MainMenuScene::Update() {
     m_Player.Update();
-    m_TextLabel->SetText(std::to_string((int)floor(1.0f /  Time::GetDeltaTime())).c_str());
+    //m_TextLabel->SetText(std::to_string((int)floor(1.0f /  Time::GetDeltaTime())).c_str());
 }
 void MainMenuScene::Draw() {
     Game::GetShader().Start();

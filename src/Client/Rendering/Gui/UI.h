@@ -65,6 +65,7 @@ public:
         ChildType* child = new ChildType(m_Gui, args...);
         child->m_Parent = this;
         child->m_Gui = m_Gui;
+        child->CalculateGlobalData();
         m_Children.push_back(child);
         return child;
     }

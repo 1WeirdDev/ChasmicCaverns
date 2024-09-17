@@ -5,6 +5,7 @@
 #include "Core/Logger.h"
 #include "Rendering/Window.h"
 #include "Math/MatrixUtils.h"
+#include "Rendering/Gui/UIs/Image.h"
 #include "Rendering/Gui/UIs/Frame.h"
 #include "Rendering/Gui/UIs/TextLabel.h"
 
@@ -50,6 +51,7 @@ void UIDisplayManager::Init(){
     s_ImageShader.LoadProjectionMatrix(s_ProjMatrix.GetData());
 
     Font* font = CreateFont("Arial", "res/Fonts/Arial.ttf");
+    CreateFont("RobotoRegular", "res/Fonts/Roboto-Regular.ttf");
     s_Texture.LoadFromPath("res/Textures/test.png");
 }
 
@@ -90,7 +92,7 @@ void UIDisplayManager::DrawUI(UI* ui, int zIndex){
     }
 
     glActiveTexture(GL_TEXTURE0);
-    s_Texture.Load();
+    //s_Texture.Load();
     switch(ui->GetUIType()){
     case UT_Frame:{
         s_FrameShader.Start();
@@ -106,6 +108,7 @@ void UIDisplayManager::DrawUI(UI* ui, int zIndex){
         s_ImageShader.LoadScale(globalSize.x, globalSize.y);
         s_ImageShader.LoadPosition(globalPosition.x, globalPosition.y);
         s_ImageShader.LoadZIndex(zIndex);
+        glBindTexture(GL_TEXTURE_2D, ((Image*)ui)->GetTextureId());
         s_TexturedMesh.Draw();
         break;
     }

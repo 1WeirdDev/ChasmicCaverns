@@ -13,7 +13,7 @@ private:
     static std::shared_ptr<spdlog::logger> s_CoreLogger;
     #endif
 };
-#if defined(Dist) && defined(USE_SPDLOG)
+#if !defined(DIST) && defined(USE_SPDLOG)
     #define CORE_ERROR(...)	::Logger::GetCoreLogger()->error(__VA_ARGS__)
     #define CORE_WARN(...)	::Logger::GetCoreLogger()->warn(__VA_ARGS__)
     #define CORE_INFO(...)	::Logger::GetCoreLogger()->info(__VA_ARGS__)
