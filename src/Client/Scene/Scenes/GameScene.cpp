@@ -21,7 +21,7 @@ void GameScene::Init() {
         1,0,-5,
         1,1,-5
     };
-
+    
     unsigned int indices[6]{
         0,1,2,2,1,3
     };
