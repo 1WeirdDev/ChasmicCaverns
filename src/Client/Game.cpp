@@ -5,6 +5,7 @@
 #include "Scene/SceneManager.h"
 #include "Scene/Scenes/MainMenuScene.h"
 #include "Rendering/Gui/UIDisplayManager.h"
+#include "Core/Mathf.h"
 
 Mat4x4 Game::s_ProjMatrix;
 Shader Game::s_Shader;
@@ -29,7 +30,7 @@ void Game::Init(){
 
     s_ProjMatrixLocation = s_Shader.GetUniformLocation("proj_matrix");
     s_ViewMatrixLocation = s_Shader.GetUniformLocation("view_matrix");
-    MatrixUtils::CreatePerspectiveProjection(s_ProjMatrix.GetData(), 90.0f, Window::GetAspectRatio(), 0.01f, 1000.0f);
+    MatrixUtils::CreatePerspectiveProjection(s_ProjMatrix.GetData(), Mathf::ToRadians(80.0f), Window::GetAspectRatio(), 0.01f, 1000.0f);
     s_Shader.LoadMat4x4(s_ProjMatrixLocation, s_ProjMatrix.GetData());
 
     SceneManager::CreateScene<MainMenuScene>();
@@ -50,6 +51,7 @@ void Game::Update(){
     Time::Update();
     SceneManager::Update();
     SceneManager::Draw();
+    Input::Update();
 
     //Drawing
     Window::Update();
@@ -72,7 +74,7 @@ void Game::OnWindowPosCallback(int xPos, int yPos){
 }
 
 void Game::OnKeyEvent(int key, KeyAction action, unsigned char modifiers){
-    CORE_DEBUG("Key {0} {1} {2}", key, action == KeyAction::Press ? "Pressed" : (action == KeyAction::Release ? "Released" : "Repeated"), modifiers);
+    //CORE_DEBUG("Key {0} {1} {2}", key, action == KeyAction::Press ? "Pressed" : (action == KeyAction::Release ? "Released" : "Repeated"), modifiers);
 }
 
 void Game::OnMouseButtonEvent(int button, bool isDown){

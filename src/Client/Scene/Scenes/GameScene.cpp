@@ -9,6 +9,7 @@
 #include "Rendering/Gui/UIs/Button.h"
 #include "Rendering/Gui/UIDisplayManager.h"
 #include "Scene/SceneManager.h"
+#include "Math/MatrixUtils.h"
 
 GameScene::GameScene(){}
 GameScene::~GameScene(){
@@ -21,7 +22,7 @@ void GameScene::Init() {
         1,0,-5,
         1,1,-5
     };
-    
+
     unsigned int indices[6]{
         0,1,2,2,1,3
     };
@@ -30,9 +31,20 @@ void GameScene::Init() {
     m_TextLabel = m_Gui.CreateChild<TextLabel>();
     m_TextLabel->SetFont(UIDisplayManager::GetFont("RobotoRegular"));
     m_TextLabel->SetText("Hello World");
+    
+    m_Shader.Create();
+    m_Shader.Start();
+    m_Shader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
+    m_Shader.LoadScale(1.0f);
+
+    Mat4x4 mat;
+    MatrixUtils::TranslateMat4x4(mat.GetData(), 0, 0, -15.0f);
+    m_Shader.LoadTransformationMatrix(mat.GetData());
+    m_Chunk.Create();
 
     m_Player.Init();
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
+    
 }
 void GameScene::CleanUp() {
     m_Player.CleanUp();
@@ -41,12 +53,17 @@ void GameScene::CleanUp() {
 }
 void GameScene::Update() {
     m_Player.Update();
-    m_TextLabel->SetText(std::to_string(Time::GetDeltaTime()).c_str());
+    m_TextLabel->SetText(std::to_string(1.0f / Time::GetDeltaTime()).c_str());
 }
 void GameScene::Draw() {
     Game::GetShader().Start();
     m_Player.Draw();
-    m_BasicMesh.Draw();
+    //m_BasicMesh.Draw();
+    
+    m_Shader.Start();
+    m_Shader.LoadViewMatrix(m_Player.GetViewMatrix());
+    m_Chunk.Draw();
+
     m_Gui.Draw();
 }
 

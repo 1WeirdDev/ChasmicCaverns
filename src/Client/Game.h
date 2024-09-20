@@ -22,6 +22,7 @@ public:
     static void OnMouseButtonEvent(int button, bool isDown);
     static void OnKeyEvent(int key, KeyAction action, unsigned char modifiers);
 
+    static Mat4x4& GetProjectionMatrix() noexcept{return s_ProjMatrix;}
     static const Shader& GetShader() noexcept {return s_Shader;}
     static int GetViewMatrixLocation() noexcept{return s_ViewMatrixLocation;}
 private:

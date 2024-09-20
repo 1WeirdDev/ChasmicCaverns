@@ -7,6 +7,9 @@
 #include "Entity/Player.h"
 
 #include "Rendering/Gui/Gui.h"
+#include "Rendering/Shaders/ChunkShader.h"
+
+#include "Game/Chunk.h"
 
 class GameScene : public Scene{
 public:
@@ -21,6 +24,8 @@ public:
     bool OnMouseButtonEvent(int button, bool isDown) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
+    ChunkShader m_Shader;
+    Chunk m_Chunk;
     Player m_Player;
     BasicMesh m_BasicMesh;
     Gui m_Gui;

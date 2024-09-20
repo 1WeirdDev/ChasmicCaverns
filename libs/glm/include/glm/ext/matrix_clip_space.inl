@@ -245,6 +245,8 @@ namespace glm
 		return Result;
 	}
 
+
+	//HERE
 	template<typename T>
 	GLM_FUNC_QUALIFIER mat<4, 4, T, defaultp> perspectiveRH_NO(T fovy, T aspect, T zNear, T zFar)
 	{

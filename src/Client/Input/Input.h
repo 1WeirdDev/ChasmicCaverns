@@ -13,6 +13,12 @@ enum KeyModifierBit{
     LeftShift = (1 << 0),
     Control = (1 << 1),
 };
+
+struct KeyUpdate{
+    uint16_t key;
+    uint8_t value;
+};
+
 class Input{
 public:
     static void Init();
@@ -27,6 +33,9 @@ public:
     //If the window is lost focus reset all keys to up
     static void OnWindowLostFocus();
 
+    static bool IsKeyPressed(uint16_t key) noexcept;
+    static bool IskeyDown(uint16_t key) noexcept;
+
 public:
     static double GetMousePosX() noexcept{return s_MousePosX;}
     static double GetMousePosY() noexcept{return s_MousePosY;}
@@ -37,6 +46,7 @@ public:
     static float GetMouseNormalizedX() noexcept{return s_MouseNormalizedX;}
     static float GetMouseNormalizedY() noexcept{return s_MouseNormalizedY;}
 private:
+    static std::vector<KeyUpdate> s_KeyUpdates;
     static std::array<uint8_t, 400> s_Keys;
     static double s_MousePosX;
     static double s_MousePosY;

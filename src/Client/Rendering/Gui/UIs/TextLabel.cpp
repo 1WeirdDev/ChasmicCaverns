@@ -110,7 +110,7 @@ void TextLabel::Update(){
                 m_RenderData[s].m_PositionX += offset / 2.0f;
         }
     }
-
+    
     //Centering on y axis
     float font_global_height = ((float)(m_Font->GetFontSize() + 15) / (float)Window::GetHeight());
     offset = 0;
