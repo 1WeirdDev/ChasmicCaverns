@@ -57,11 +57,11 @@ void Player::Update(){
     //MatrixUtils::CreateRotationMatrixAxisY(rotationMatrix.GetData(), m_Rotation.y);
     //MatrixUtils::MultiplyMat4x4(m_ViewMatrix.GetData(), m_ViewMatrix.GetData(), rotationMatrix.GetData());
     
-    //MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.z, Vec3<float>(1.0f, 0.0f, 0.0f));
-    //MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.y, Vec3<float>(0.0f, 1.0f, 0.0f));
-    //MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), m_Position);
+    MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.z, Vec3<float>(1.0f, 0.0f, 0.0f));
+    MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.y, Vec3<float>(0.0f, 1.0f, 0.0f));
+    MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), m_Position);
     
-    //Shader::LoadMat4x4(Game::GetViewMatrixLocation(), m_ViewMatrix.GetData());
+    Shader::LoadMat4x4(Game::GetViewMatrixLocation(), m_ViewMatrix.GetData());
 }
 void Player::Draw(){
 
