@@ -11,7 +11,8 @@ public:
     static void Update();
     static void Draw();
 
-    static bool OnMouseButtonEvent(int button, bool isDown);
+    static void OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers);
+    static void OnMouseButtonEvent(int button, bool isDown);
     static void OnWindowResizeEvent(int width, int height);
 
     template<typename SCENE>

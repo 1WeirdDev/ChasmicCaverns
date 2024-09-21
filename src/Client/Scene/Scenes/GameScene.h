@@ -20,8 +20,9 @@ public:
     void CleanUp() override;
     void Update() override;
     void Draw() override;
-    
-    bool OnMouseButtonEvent(int button, bool isDown) override;
+
+    bool OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers, bool handled) override;
+    bool OnMouseButtonEvent(int button, bool isDown, bool handled) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
     ChunkShader m_Shader;

@@ -38,9 +38,12 @@ void GameScene::Init() {
     m_Shader.LoadScale(1.0f);
 
     Mat4x4 mat;
-    MatrixUtils::TranslateMat4x4(mat.GetData(), 0, 0, -15.0f);
+    MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -15.0f);
     m_Shader.LoadTransformationMatrix(mat.GetData());
-    m_Chunk.Create();
+    
+    m_Chunk.CreatePointData();
+    m_Chunk.CreateMeshData();
+    m_Chunk.CreateMesh();
 
     m_Player.Init();
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
@@ -66,8 +69,11 @@ void GameScene::Draw() {
 
     m_Gui.Draw();
 }
-
-bool GameScene::OnMouseButtonEvent(int button, bool isDown){
+bool GameScene::OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers, bool handled){
+    return false;
+}
+bool GameScene::OnMouseButtonEvent(int button, bool isDown, bool handled){
+    if(handled)return false;
     return m_Gui.OnMouseButtonEvent(button, isDown);
 }
 void GameScene::OnWindowResizeEvent(int width, int height){

@@ -20,8 +20,8 @@ Files += $(SRC_DIR)Game.cpp $(SRC_DIR)Input/Input.cpp $(SRC_DIR)Entity/Player.cp
 #Scenes
 Files += $(SRC_DIR)Scene/Scene.cpp $(SRC_DIR)Scene/SceneManager.cpp
 Files += $(SCENES_DIR)MainMenuScene.cpp $(SCENES_DIR)GameScene.cpp
-#Textures
-Files += $(SRC_DIR)Game/Chunk.cpp
+#Game Core
+Files += $(SRC_DIR)Game/Chunk.cpp $(SRC_DIR)Game/Marcher.cpp
 #Textures
 Files += $(SRC_DIR)Rendering/Textures/Texture.cpp
 #Meshes

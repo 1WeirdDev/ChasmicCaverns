@@ -11,6 +11,7 @@
 
 #include <array>
 #include <vector>
+#include <bitset>
 
 #include <cstdint>
 

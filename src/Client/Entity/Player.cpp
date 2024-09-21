@@ -36,7 +36,8 @@ void Player::Update(){
         moveDirection.z += (float)cos(m_Rotation.y + Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
     }
 
-    m_Position += moveDirection;
+    float speed = 10;
+    m_Position += moveDirection * speed;
 
     Game::GetShader().Start();
     m_ViewMatrix.SetIdentity();

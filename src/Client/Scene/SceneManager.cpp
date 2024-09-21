@@ -48,12 +48,20 @@ bool SceneManager::DeleteScene(Scene* scene){
     }
     return false;
 }
-bool SceneManager::OnMouseButtonEvent(int button, bool isDown){
+
+void SceneManager::OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers){
+    bool handled = false;
     for(size_t i = 0; i < s_Scenes.size(); i++){
-        if(s_Scenes[i]->OnMouseButtonEvent(button, isDown))
-            return true;
+        if(s_Scenes[i]->OnKeyDownEvent(key, action, modifiers, handled))
+            handled = true;
     }
-    return false;
+}
+void SceneManager::OnMouseButtonEvent(int button, bool isDown){
+    bool handled = false;
+    for(size_t i = 0; i < s_Scenes.size(); i++){
+        if(s_Scenes[i]->OnMouseButtonEvent(button, isDown, handled))
+            handled = true;
+    }
 }
 
 void SceneManager::OnWindowResizeEvent(int width, int height){

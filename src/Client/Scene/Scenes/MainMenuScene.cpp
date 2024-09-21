@@ -52,7 +52,8 @@ void MainMenuScene::Draw() {
     m_Gui.Draw();
 }
 
-bool MainMenuScene::OnMouseButtonEvent(int button, bool isDown){
+bool MainMenuScene::OnMouseButtonEvent(int button, bool isDown, bool handled){
+    if(handled)return false;
     return m_Gui.OnMouseButtonEvent(button, isDown);
 }
 void MainMenuScene::OnWindowResizeEvent(int width, int height){
