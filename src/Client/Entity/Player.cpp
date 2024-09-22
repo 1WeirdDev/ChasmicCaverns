@@ -54,5 +54,5 @@ void Player::Update(){
     Shader::LoadMat4x4(Game::GetViewMatrixLocation(), m_ViewMatrix.GetData());
 }
 void Player::Draw(){
-    CORE_DEBUG("PLR POSITION ({0}, {1}, {2})", m_Position.x, m_Position.y, m_Position.z);
+    //CORE_DEBUG("PLR POSITION ({0}, {1}, {2})", m_Position.x, m_Position.y, m_Position.z);
 }

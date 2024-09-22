@@ -46,7 +46,7 @@ void GameScene::Init() {
 
     mat.SetIdentity();
     //the vertices will be 5 * larger on point mesh data
-    scale = 1.0 / 8.0f;
+    scale = (1.0 / 8.0f) * 2.0f;
     MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -5.0f);
     MatrixUtils::ScaleMat4x4(mat.GetData(), scale , scale, -scale);
     m_PointShader.Create();
@@ -60,6 +60,7 @@ void GameScene::Init() {
     m_Chunk.CreateMeshData();
     m_Chunk.CreateMesh();
 
+    m_Chunk.SetPosition(0, 0, 0);
     m_Player.Init();
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
@@ -77,14 +78,16 @@ void GameScene::Draw() {
     m_Player.Draw();
     //m_BasicMesh.Draw();
     if(m_PolygonMode)glDisable(GL_CULL_FACE), m_PointShader.Start(), 
-    m_Shader.LoadViewMatrix(m_Player.GetViewMatrix()), m_Chunk.DrawPoints();
+    m_PointShader.LoadViewMatrix(m_Player.GetViewMatrix()),
+    m_PointShader.LoadTransformationMatrix(m_Chunk.GetPointTransformationMatrix()),
+    m_Chunk.DrawPoints();
 
     else glEnable(GL_CULL_FACE);
     glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode ? GL_LINE : GL_FILL);
     
-    
     m_Shader.Start();
     m_Shader.LoadViewMatrix(m_Player.GetViewMatrix());
+    m_Shader.LoadTransformationMatrix(m_Chunk.GetTransformationMatrix()),
 
     m_Chunk.Draw();
 
