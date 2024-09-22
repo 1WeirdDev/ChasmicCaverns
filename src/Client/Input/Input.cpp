@@ -81,7 +81,7 @@ bool Input::IsKeyPressed(uint16_t key) noexcept{
     if(key < 0 || key >= s_Keys.size())return false;
     return s_Keys[key] == 2;
 }
-bool Input::IskeyDown(uint16_t key) noexcept{
+bool Input::IsKeyDown(uint16_t key) noexcept{
     if(key < 0 || key >= s_Keys.size())return false;
     return s_Keys[key] > 0;
 }

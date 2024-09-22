@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Rendering/BasicMesh.h"
+#include "Rendering/Mesh/BasicMesh.h"
+#include "Rendering/Mesh/PointMesh.h"
 
 enum class FaceBit{
     FrontTopLeft =      (uint8_t)(1 << 7),
@@ -27,6 +28,7 @@ public:
     void CreateMesh();
     void CleanUp();
 
+    void DrawPoints() const;
     void Draw() const;
 
     uint8_t GetPointId(uint8_t x, uint8_t y, uint8_t z) const noexcept;
@@ -45,4 +47,11 @@ private:
     std::vector<uint8_t> m_Vertices;
     std::vector<uint16_t> m_Indices;
     uint16_t m_VertexIndex = 0;
+private:
+#ifndef DIST
+    PointMesh m_PointMesh;
+    std::vector<uint8_t> m_PointVertices;
+    std::vector<uint16_t> m_PointIndices;
+    uint16_t m_PointVertexIndex = 0;
+#endif
 };

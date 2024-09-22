@@ -2,13 +2,13 @@
 
 #include "../Scene.h"
 
-#include "Rendering/BasicMesh.h"
+#include "Rendering/Mesh/BasicMesh.h"
 #include "Rendering/Gui/UIs/TextLabel.h"
 #include "Entity/Player.h"
 
 #include "Rendering/Gui/Gui.h"
 #include "Rendering/Shaders/ChunkShader.h"
-
+#include "Rendering/Shaders/PointShader.h"
 #include "Game/Chunk.h"
 
 class GameScene : public Scene{
@@ -25,10 +25,12 @@ public:
     bool OnMouseButtonEvent(int button, bool isDown, bool handled) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
+    PointShader m_PointShader;
     ChunkShader m_Shader;
     Chunk m_Chunk;
     Player m_Player;
     BasicMesh m_BasicMesh;
     Gui m_Gui;
     TextLabel* m_TextLabel = nullptr;
+    bool m_PolygonMode = false;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Rendering/BasicMesh.h"
-#include "Rendering/TexturedMesh.h"
+#include "Rendering/Mesh/BasicMesh.h"
+#include "Rendering/Mesh/TexturedMesh.h"
 #include "Rendering/Shader.h"
 #include "Rendering/Shaders/UIFrameShader.h"
 #include "Rendering/Shaders/UIImageShader.h"

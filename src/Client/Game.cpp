@@ -74,7 +74,7 @@ void Game::OnWindowPosCallback(int xPos, int yPos){
 }
 
 void Game::OnKeyEvent(int key, KeyAction action, unsigned char modifiers){
-    //CORE_DEBUG("Key {0} {1} {2}", key, action == KeyAction::Press ? "Pressed" : (action == KeyAction::Release ? "Released" : "Repeated"), modifiers);
+    SceneManager::OnKeyDownEvent(key, action, modifiers);
 }
 
 void Game::OnMouseButtonEvent(int button, bool isDown){

@@ -31,24 +31,37 @@ void GameScene::Init() {
     m_TextLabel = m_Gui.CreateChild<TextLabel>();
     m_TextLabel->SetFont(UIDisplayManager::GetFont("RobotoRegular"));
     m_TextLabel->SetText("Hello World");
-    
+
+    Mat4x4 mat;
+    float scale = 1.0f;
+    MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -5.0f);
+    MatrixUtils::ScaleMat4x4(mat.GetData(), scale, scale, -scale);
+
     m_Shader.Create();
     m_Shader.Start();
     m_Shader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
     m_Shader.LoadScale(1.0f);
 
-    Mat4x4 mat;
-    MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -15.0f);
-    MatrixUtils::ScaleMat4x4(mat.GetData(), 1.0f, 1.0f, -1.0f);
     m_Shader.LoadTransformationMatrix(mat.GetData());
-    
+
+    mat.SetIdentity();
+    //the vertices will be 5 * larger on point mesh data
+    scale = 1.0 / 8.0f;
+    MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -5.0f);
+    MatrixUtils::ScaleMat4x4(mat.GetData(), scale , scale, -scale);
+    m_PointShader.Create();
+    m_PointShader.Start();
+    m_PointShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
+    m_PointShader.LoadScale(1.0f);
+
+    m_PointShader.LoadTransformationMatrix(mat.GetData());
+
     m_Chunk.CreatePointData();
     m_Chunk.CreateMeshData();
     m_Chunk.CreateMesh();
 
     m_Player.Init();
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
-    
 }
 void GameScene::CleanUp() {
     m_Player.CleanUp();
@@ -63,14 +76,27 @@ void GameScene::Draw() {
     Game::GetShader().Start();
     m_Player.Draw();
     //m_BasicMesh.Draw();
+    if(m_PolygonMode)glDisable(GL_CULL_FACE), m_PointShader.Start(), 
+    m_Shader.LoadViewMatrix(m_Player.GetViewMatrix()), m_Chunk.DrawPoints();
+
+    else glEnable(GL_CULL_FACE);
+    glPolygonMode(GL_FRONT_AND_BACK, m_PolygonMode ? GL_LINE : GL_FILL);
+    
     
     m_Shader.Start();
     m_Shader.LoadViewMatrix(m_Player.GetViewMatrix());
+
     m_Chunk.Draw();
 
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL );
     m_Gui.Draw();
 }
 bool GameScene::OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers, bool handled){
+    if(handled)return false;
+    if(key == GLFW_KEY_R && action == KeyAction::Press){
+        CORE_DEBUG("SWITCHING POLYGON MODE");
+        m_PolygonMode = !m_PolygonMode;
+    }
     return false;
 }
 bool GameScene::OnMouseButtonEvent(int button, bool isDown, bool handled){

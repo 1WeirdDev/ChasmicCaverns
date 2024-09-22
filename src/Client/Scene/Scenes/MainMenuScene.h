@@ -2,7 +2,7 @@
 
 #include "../Scene.h"
 
-#include "Rendering/BasicMesh.h"
+#include "Rendering/Mesh/BasicMesh.h"
 #include "Rendering/Gui/UIs/TextLabel.h"
 #include "Entity/Player.h"
 

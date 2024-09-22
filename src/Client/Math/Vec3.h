@@ -20,6 +20,11 @@ public:
         this->y = y;
         this->z = z;
     }
+
+    Vec3<TYPE> operator-() const noexcept{
+        Vec3<TYPE> vec(-x, -y, -z);
+        return vec;
+    }
     Vec3<TYPE> operator+(const Vec3<TYPE>& rhs) const noexcept{             
         Vec3<TYPE> vec;              
         vec.x = this->x + rhs.x;

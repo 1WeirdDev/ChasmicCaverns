@@ -4,7 +4,7 @@
 #include "Core/Logger.h"
 #include "Rendering/Window.h"
 #include "Rendering/Shader.h"
-#include "Rendering/BasicMesh.h"
+#include "Rendering/Mesh/BasicMesh.h"
 #include "Math/Mat4x4.h"
 #include "Input/Input.h"
 

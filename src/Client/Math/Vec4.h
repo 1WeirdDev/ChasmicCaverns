@@ -23,6 +23,10 @@ public:
         this->z = z;
         this->w = w;
     }
+    Vec4<TYPE> operator-() const noexcept{
+        Vec4<TYPE> vec(-x, -y, -z, -w);
+        return vec;
+    }
     Vec4<TYPE> operator+(const Vec4<TYPE>& rhs) const noexcept{             
         Vec4<TYPE> vec;              
         vec.x = this->x + rhs.x;

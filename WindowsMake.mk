@@ -16,6 +16,7 @@ IncludeDirs += /Ilibs\glm\include
 RENDERING_SRC = $(SRC_DIR)Rendering/
 SHADERS_SRC = $(SRC_DIR)Rendering/Shaders/
 SCENES_DIR = $(SRC_DIR)Scene/Scenes/
+MESH_DIR = $(RENDERING_SRC)Mesh/
 Files += $(SRC_DIR)Game.cpp $(SRC_DIR)Input/Input.cpp $(SRC_DIR)Entity/Player.cpp $(SRC_DIR)Math/MatrixUtils.cpp $(SRC_DIR)/Rendering/Window.cpp $(SRC_DIR)Core/Time.cpp $(SRC_DIR)Core/Logger.cpp $(SRC_DIR)Rendering/Shader.cpp
 #Scenes
 Files += $(SRC_DIR)Scene/Scene.cpp $(SRC_DIR)Scene/SceneManager.cpp
@@ -25,9 +26,9 @@ Files += $(SRC_DIR)Game/Chunk.cpp $(SRC_DIR)Game/Marcher.cpp
 #Textures
 Files += $(SRC_DIR)Rendering/Textures/Texture.cpp
 #Meshes
-Files += $(RENDERING_SRC)TexturedMesh.cpp $(RENDERING_SRC)BasicMesh.cpp
+Files += $(MESH_DIR)TexturedMesh.cpp $(MESH_DIR)BasicMesh.cpp $(MESH_DIR)PointMesh.cpp
 #Shaders
-Files += $(SHADERS_SRC)ChunkShader.cpp $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
+Files += $(SHADERS_SRC)ChunkShader.cpp $(SHADERS_SRC)PointShader.cpp $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
 #GUI
 GUI_DIR = $(SRC_DIR)Rendering/Gui/
 Files += $(GUI_DIR)Font.cpp $(GUI_DIR)UIDisplayManager.cpp $(GUI_DIR)UI.cpp $(GUI_DIR)UIS/Image.cpp $(GUI_DIR)UIS/TextLabel.cpp $(GUI_DIR)Gui.cpp $(GUI_DIR)UIs/Button.cpp

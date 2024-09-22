@@ -18,20 +18,27 @@ void Player::Update(){
     m_Rotation.z = Mathf::Clamp(m_Rotation.z, Mathf::ToRadians(-90.0f), Mathf::ToRadians(90.0f));
 
     Vec3<float> moveDirection(0.0f);
-    if(Input::IskeyDown(GLFW_KEY_S)){
-        moveDirection.x += (float)sin(m_Rotation.y) * Time::GetDeltaTime();
-        moveDirection.z -= (float)cos(m_Rotation.y) * Time::GetDeltaTime();
-    }if(Input::IskeyDown(GLFW_KEY_W)){
+    if(Input::IsKeyDown(GLFW_KEY_S)){
         moveDirection.x -= (float)sin(m_Rotation.y) * Time::GetDeltaTime();
         moveDirection.z += (float)cos(m_Rotation.y) * Time::GetDeltaTime();
+    }if(Input::IsKeyDown(GLFW_KEY_W)){
+        moveDirection.x += (float)sin(m_Rotation.y) * Time::GetDeltaTime();
+        moveDirection.z -= (float)cos(m_Rotation.y) * Time::GetDeltaTime();
     }
 
-    if(Input::IskeyDown(GLFW_KEY_A)){
-        moveDirection.x -= (float)sin(m_Rotation.y - Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
-        moveDirection.z += (float)cos(m_Rotation.y - Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
-    }if(Input::IskeyDown(GLFW_KEY_D)){
-        moveDirection.x -= (float)sin(m_Rotation.y + Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
-        moveDirection.z += (float)cos(m_Rotation.y + Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
+    if(Input::IsKeyDown(GLFW_KEY_A)){
+        moveDirection.x += (float)sin(m_Rotation.y - Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
+        moveDirection.z -= (float)cos(m_Rotation.y - Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
+    }if(Input::IsKeyDown(GLFW_KEY_D)){
+        moveDirection.x += (float)sin(m_Rotation.y + Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
+        moveDirection.z -= (float)cos(m_Rotation.y + Mathf::ToRadians(90.0f)) * Time::GetDeltaTime();
+    }
+
+    if(Input::IsKeyDown(GLFW_KEY_SPACE)){
+        moveDirection.y += Time::GetDeltaTime();
+    }
+    if(Input::IsKeyDown(GLFW_KEY_LEFT_SHIFT)){
+        moveDirection.y -= Time::GetDeltaTime();
     }
 
     float speed = 10;
@@ -39,13 +46,13 @@ void Player::Update(){
 
     Game::GetShader().Start();
     m_ViewMatrix.SetIdentity();
-    
+
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.z, Vec3<float>(1.0f, 0.0f, 0.0f));
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.y, Vec3<float>(0.0f, 1.0f, 0.0f));
-    MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), m_Position);
+    MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), -m_Position);
     
     Shader::LoadMat4x4(Game::GetViewMatrixLocation(), m_ViewMatrix.GetData());
 }
 void Player::Draw(){
-
+    CORE_DEBUG("PLR POSITION ({0}, {1}, {2})", m_Position.x, m_Position.y, m_Position.z);
 }

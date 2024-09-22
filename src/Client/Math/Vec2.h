@@ -12,6 +12,10 @@ public:
         this->x = x;
         this->y = y;
     } 
+    Vec2<TYPE> operator-() const noexcept{
+        Vec3<TYPE> vec(-x, -y);
+        return vec;
+    }
     Vec2<TYPE> operator+(const Vec2<TYPE>& rhs)const{             
         Vec2<TYPE> vec;              
         vec.x = this->x + rhs.x;

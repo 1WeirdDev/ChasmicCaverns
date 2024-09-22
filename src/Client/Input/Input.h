@@ -34,7 +34,7 @@ public:
     static void OnWindowLostFocus();
 
     static bool IsKeyPressed(uint16_t key) noexcept;
-    static bool IskeyDown(uint16_t key) noexcept;
+    static bool IsKeyDown(uint16_t key) noexcept;
 
 public:
     static double GetMousePosX() noexcept{return s_MousePosX;}

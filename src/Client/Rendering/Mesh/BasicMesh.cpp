@@ -69,6 +69,7 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
     //Indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize * indexCount, indices, GL_STATIC_DRAW);
+    m_VertexCount = vertexCount;
     m_IndexCount = indexCount;
     m_IsCreated = true;
 }
@@ -77,4 +78,8 @@ void BasicMesh::Draw()const{
     if(!m_IsCreated)return;
     glBindVertexArray(m_VaoId);
     glDrawElements(GL_TRIANGLES, m_IndexCount, m_GLIndexType, nullptr);
+}
+
+void BasicMesh::DrawPoints() const{
+    glDrawArrays(GL_POINTS, 0, m_VertexCount);
 }
