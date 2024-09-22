@@ -31,7 +31,7 @@ void Chunk::AddVertex(uint8_t x, uint8_t y, uint8_t z) noexcept
     m_Vertices.push_back(y);
     m_Vertices.push_back(z);
 }
-void Chunk::CreateData(uint8_t blockId)
+void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
 {
     uint8_t bitsEnabled = 0;
     for (uint8_t x = 0; x < 8; x++)
@@ -41,13 +41,14 @@ void Chunk::CreateData(uint8_t blockId)
     }
 
     CORE_DEBUG("Creating data for {0} bits enabled {1}", blockId, bitsEnabled);
+
     switch (bitsEnabled)
     {
     case 0:
     case 8:
         break;
     case 1:
-        CreateSingle(blockId);
+        CreateSingle(x, y, z, blockId);
         break;
     default:
         PrintUnidentifiedCase(bitsEnabled, blockId);
@@ -55,14 +56,14 @@ void Chunk::CreateData(uint8_t blockId)
     }
 }
 
-void Chunk::CreateSingle(uint8_t blockId)
+void Chunk::CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
 {
     switch (blockId)
     {
     case 0b00000001:
-        AddVertex(0, 1, 0);
-        AddVertex(1, 0, 0);
-        AddVertex(0, 0, 1);
+        AddVertex(x + 0, y + 1, z + 0);
+        AddVertex(x + 1, y + 0, z + 0);
+        AddVertex(x + 0, y + 0, z + 1);
         AddFaces(1);
         break;
     default:

@@ -41,23 +41,9 @@ void Player::Update(){
 
     Game::GetShader().Start();
     m_ViewMatrix.SetIdentity();
-
-    //std::cout << data[0] << " " << data[1] << " " << data[2] << " " << data[3] << std::endl;
-    // CORE_DEBUG("{0}, {1}, {2}, {3} | {4}, {5}, {6}, {7}", matrix[0].x, matrix[0].y, matrix[0].z, matrix[0].w, data[0], data[1], data[2], data[3])
     
-    //testMatrix = glm::mat4x4(1.0f);
-    //testMatrix = glm::rotate(testMatrix, m_Rotation.z, glm::vec3(1.0f, 0.0f, 0.0f));
-    //testMatrix = glm::rotate(testMatrix, m_Rotation.y, glm::vec3(0.0f, 1.0f, 0.0f));
-    //testMatrix = glm::translate(testMatrix, glm::vec3(m_Position.x, 0, m_Position.z));
-    //Create rotation matrix
-    //Mat4x4 rotationMatrix;
-    //MatrixUtils::CreateRotationMatrixAxisX(rotationMatrix.GetData(), m_Rotation.z);
-    //MatrixUtils::MultiplyMat4x4(m_ViewMatrix.GetData(), m_ViewMatrix.GetData(), rotationMatrix.GetData());
-    //MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), 1.0f, Vec3<float>(0.0f, 1.0f, 0.0f));
-
-    //MatrixUtils::CreateRotationMatrixAxisY(rotationMatrix.GetData(), m_Rotation.y);
-    //MatrixUtils::MultiplyMat4x4(m_ViewMatrix.GetData(), m_ViewMatrix.GetData(), rotationMatrix.GetData());
-    
+    glm::mat4x4 test;
+    glm::scale(test, glm::vec3(1, 1, 1));
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.z, Vec3<float>(1.0f, 0.0f, 0.0f));
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.y, Vec3<float>(0.0f, 1.0f, 0.0f));
     MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), m_Position);

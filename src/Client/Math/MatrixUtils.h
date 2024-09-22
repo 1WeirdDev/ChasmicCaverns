@@ -29,6 +29,9 @@ public:
     static void CreateRotationMatrixAxisY(float* dst, float angleInRadians)noexcept;
     static void CreateRotationMatrixAxisZ(float* dst, float angleInRadians)noexcept;
 
+    //Scaling
+    static void ScaleMat4x4(float* dst, float x, float y, float z) noexcept;
+
 #pragma region Templates
 
     /// @brief 

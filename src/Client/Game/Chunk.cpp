@@ -9,27 +9,32 @@ Chunk::~Chunk(){
 void Chunk::CreatePointData(){
     memset(m_PointData.data(), 0, sizeof(m_PointData));
     SetPointId(0,1,0, 1);
+    SetPointId(2,1,0, 1);
 }
 void Chunk::CreateMeshData(){
-    uint8_t blockId = (uint8_t)((uint8_t)(IsPointEnabled(0,1,0) ? 1 : 0) | 
-        (uint8_t)(IsPointEnabled(0,0,0) ? (uint8_t)FaceBit::FrontBottomLeft : 0) |
-        (uint8_t)(IsPointEnabled(0,1,1) ? (uint8_t)FaceBit::BackTopLeft : 0) |
-        (uint8_t)(IsPointEnabled(0,0,1) ? (uint8_t)FaceBit::BackBottomLeft : 0) |
-        (uint8_t)(IsPointEnabled(1,1,0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
-        (uint8_t)(IsPointEnabled(1,0,0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
-        (uint8_t)(IsPointEnabled(1,1,1) ? (uint8_t)FaceBit::BackTopRight : 0) |
-        (uint8_t)(IsPointEnabled(1,0,1) ? (uint8_t)FaceBit::BackBottomRight : 0));
-    
-    for(unsigned char x = 0; x < 6; x++){
-        CreateData(blockId);
+    uint8_t blockId = 0;
+    for(uint8_t y = 0; y < 6; y++){
+        for(uint8_t z = 0; z < 6; z++){
+            blockId = (uint8_t)((uint8_t)(IsPointEnabled(0,y + 1,z) ? 1 : 0) | 
+                (uint8_t)(IsPointEnabled(0, y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomLeft : 0) |
+                (uint8_t)(IsPointEnabled(0, y + 1, z + 1) ? (uint8_t)FaceBit::BackTopLeft : 0) |
+                (uint8_t)(IsPointEnabled(0, y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomLeft : 0) |
+                (uint8_t)(IsPointEnabled(1, y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
+                (uint8_t)(IsPointEnabled(1, y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
+                (uint8_t)(IsPointEnabled(1, y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
+                (uint8_t)(IsPointEnabled(1, y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0));
+            for(uint8_t x = 0; x < 6; x++){
+                CreateData(x, y, z, blockId);
 
-        //Shift the right to the left and get the new right sides data
-        blockId <<= 4;
-        blockId |=
-        (IsPointEnabled(1,1,0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
-        (IsPointEnabled(1,0,0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
-        (IsPointEnabled(1,1,1) ? (uint8_t)FaceBit::BackTopRight : 0) |
-        (IsPointEnabled(1,0,1) ? (uint8_t)FaceBit::BackBottomRight : 0);
+                //Shift the right to the left and get the new right sides data
+                blockId <<= 4;
+                blockId |=
+                (IsPointEnabled(x + 1,y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
+                (IsPointEnabled(x + 1,y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
+                (IsPointEnabled(x + 1,y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
+                (IsPointEnabled(x + 1,y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0);
+            }
+        }
     }
 }
 void Chunk::CreateMesh(){

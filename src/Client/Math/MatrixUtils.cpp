@@ -115,3 +115,30 @@ void MatrixUtils::CreateRotationMatrixAxisZ(float* dst, float angleInRadians)noe
     SetMat4Data(dst, 1,1, cos(angleInRadians));
 }
 #pragma endregion
+
+#pragma region Scaling
+void MatrixUtils::ScaleMat4x4(float* dst, float x, float y, float z) noexcept{
+    //float* b = &x;
+    //for(unsigned char i = 0; i < 12; i+=4){
+    //    dst[i] *= *b;
+    //    dst[i + 1] *= *b;
+    //    dst[i + 2] *= *b;
+    //    dst[i + 3] *= *b;
+    //    b+=sizeof(float);
+    //}
+    dst[0] *= x;
+    dst[1] *= x;
+    dst[2] *= x;
+    dst[3] *= x;
+
+    dst[4] *= y;
+    dst[5] *= y;
+    dst[6] *= y;
+    dst[7] *= y;
+
+    dst[8] *= z;
+    dst[9] *= z;
+    dst[10] *= z;
+    dst[11] *= z;
+}
+#pragma endregion

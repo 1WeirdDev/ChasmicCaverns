@@ -15,8 +15,8 @@ enum class FaceBit{
 
 class Chunk{
 public:
-    static constexpr uint16_t ChunkWidth = 20;
-    static constexpr uint16_t ChunkHeight = 20;
+    static constexpr uint8_t ChunkWidth = 20;
+    static constexpr uint8_t ChunkHeight = 20;
     static constexpr uint16_t ChunkWidthSquared = ChunkWidth * ChunkWidth;
 public:
     Chunk();
@@ -33,11 +33,11 @@ public:
     bool IsPointEnabled(uint8_t x, uint8_t y, uint8_t z) const noexcept;
     void SetPointId(uint8_t x, uint8_t y, uint8_t z, uint8_t id) noexcept;
 private:
-    void CreateSingle(uint8_t blockId);
+    void CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
 private:
     void AddVertex(uint8_t x, uint8_t y, uint8_t z) noexcept;
     void AddFaces(uint8_t amount);
-    void CreateData(uint8_t blockId);
+    void CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
 private:
     std::array<uint8_t, ChunkWidth * ChunkWidth * ChunkHeight> m_PointData;
 private:

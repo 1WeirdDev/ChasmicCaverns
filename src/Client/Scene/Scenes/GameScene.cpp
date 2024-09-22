@@ -39,6 +39,7 @@ void GameScene::Init() {
 
     Mat4x4 mat;
     MatrixUtils::CreateTranslationMatrix(mat.GetData(), 0, 0, -15.0f);
+    MatrixUtils::ScaleMat4x4(mat.GetData(), 1.0f, 1.0f, -1.0f);
     m_Shader.LoadTransformationMatrix(mat.GetData());
     
     m_Chunk.CreatePointData();
@@ -56,7 +57,7 @@ void GameScene::CleanUp() {
 }
 void GameScene::Update() {
     m_Player.Update();
-    m_TextLabel->SetText(std::to_string(1.0f / Time::GetDeltaTime()).c_str());
+    m_TextLabel->SetText(std::to_string(1.0 / (double)Time::GetDeltaTime()).c_str());
 }
 void GameScene::Draw() {
     Game::GetShader().Start();
