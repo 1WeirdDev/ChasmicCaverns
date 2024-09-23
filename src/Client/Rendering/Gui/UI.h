@@ -57,6 +57,8 @@ public:
     UI(Gui* gui);
     virtual ~UI();
 
+    //calculates the relative position needed to be at that global position
+    void SetGlobalPosition(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY);
     void SetPosition(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY);
     void SetSize(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY);
 

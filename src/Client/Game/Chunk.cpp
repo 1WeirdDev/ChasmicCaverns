@@ -10,45 +10,54 @@ Chunk::~Chunk(){
 
 void Chunk::CreatePointData(){
     memset(m_PointData.data(), 0, sizeof(m_PointData));
-    SetPointId(0,1,0, 1);
+    SetPointId(0,1,1, 1);
     SetPointId(2,1,0, 1);
     SetPointId(3,1,1, 1);
+    
+    SetPointId(2,1,2, 1);
+    
+    srand(time(NULL)); 
+
+    for(unsigned char y = 0; y < ChunkWidth; y++){
+        for(unsigned char z = 0; z < ChunkWidth; z++){
+            for(unsigned char x = 0; x < ChunkWidth; x++){
+                
+                int value = rand() % 15;
+                SetPointId(x , y, z, value > 0 ? 1 : 0);
+            }
+        }
+    }
 }
 void Chunk::CreateMeshData(){
     uint8_t blockId = 0;
     for(uint8_t y = 0; y < ChunkHeight - 1; y++){
         for(uint8_t z = 0; z < ChunkWidth - 1; z++){
-            
-            /*
-            blockId = (uint8_t)((uint8_t)(IsPointEnabled(0,y + 1,z) ? (uint8_t)FaceBit::FrontTopLeft : 0) | 
-                (uint8_t)(IsPointEnabled(0, y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomLeft : 0) |
-                (uint8_t)(IsPointEnabled(0, y + 1, z + 1) ? (uint8_t)FaceBit::BackTopLeft : 0) |
-                (uint8_t)(IsPointEnabled(0, y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomLeft : 0) |
-                (uint8_t)(IsPointEnabled(1, y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
-                (uint8_t)(IsPointEnabled(1, y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
-                (uint8_t)(IsPointEnabled(1, y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
-                (uint8_t)(IsPointEnabled(1, y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0));
-            */
             blockId = (uint8_t)((uint8_t)(IsPointEnabled(0, y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
                 (uint8_t)(IsPointEnabled(0, y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
                 (uint8_t)(IsPointEnabled(0, y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
                 (uint8_t)(IsPointEnabled(0, y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0));
-            
+
 
             for(uint8_t x = 0; x < ChunkWidth - 1; x++){
                 //We do *2 because 1 is half of a block and 2 is a full point
                 //Then we scale it in the shader
                 blockId <<= 4;
+                blockId &= 0b11110000;
                 blockId |=
                 (IsPointEnabled(x + 1,y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
                 (IsPointEnabled(x + 1,y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
                 (IsPointEnabled(x + 1,y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
                 (IsPointEnabled(x + 1,y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0);
-            
-                CreateData(x* 2, y * 2, z * 2, blockId);
 
-                
+                CreateData(x* 2, y * 2, z * 2, blockId);
+            }
+        }
+    }
+    
 #ifndef DIST
+    for(uint8_t y = 0; y < ChunkHeight; y++){
+        for(uint8_t z = 0; z < ChunkWidth; z++){
+            for(uint8_t x = 0; x < ChunkWidth; x++){
                 //Create square
                 //----
                 //This scale has nothing to do with chunk vertices but only points
@@ -137,22 +146,13 @@ void Chunk::CreateMeshData(){
                 m_PointIndices.push_back(m_PointVertexIndex + 5);
                 m_PointVertexIndex+=8;
                 //----
-#endif
-                //Shift the right to the left and get the new right sides data
-                /*
-                blockId <<= 4;
-                blockId |=
-                (IsPointEnabled(x + 1,y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
-                (IsPointEnabled(x + 1,y + 0, z + 0) ? (uint8_t)FaceBit::FrontBottomRight : 0) |
-                (IsPointEnabled(x + 1,y + 1, z + 1) ? (uint8_t)FaceBit::BackTopRight : 0) |
-                (IsPointEnabled(x + 1,y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0);
-            */
             }
         }
     }
+#endif
 }
 void Chunk::CreateMesh(){
-    m_Mesh.Create(3, VT_UNSIGNED_CHAR, FT_UNSIGNED_SHORT, m_Vertices.data(), m_Indices.data(), m_Vertices.size(), m_Indices.size());
+    m_Mesh.Create(3, VT_UNSIGNED_CHAR, FT_UNSIGNED_SHORT, VT_UNSIGNED_CHAR, m_Vertices.data(), m_Indices.data(), m_TextureCoords.data(), m_Vertices.size(), m_Indices.size(), m_TextureCoords.size());
 #ifndef DIST
     m_PointMesh.Create(m_PointVertices.data(), m_PointIndices.data(), m_PointVertices.size(), m_PointIndices.size());
 #endif
@@ -190,11 +190,16 @@ void Chunk::SetPointId(uint8_t x, uint8_t y, uint8_t z, uint8_t id) noexcept{
 
 void Chunk::SetPosition(int8_t x, int8_t y, int8_t z){
     m_Position.SetXYZ(x, y, z);
+
+    //We invert the z axis for the transformation matrix and add The chunkWidth to compensate
+    z+= 1;
     MatrixUtils::TranslateMat4x4(m_TransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth, y * ChunkHeight, z * ChunkWidth));
-    float scale = 1.0f;
+    float scale = 0.5f;
     MatrixUtils::ScaleMat4x4(m_TransformationMatrix.GetData(), scale , scale, -scale);
 
+#ifndef DIST
     MatrixUtils::TranslateMat4x4(m_PointTransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth, y * ChunkHeight, z * ChunkWidth));
-    scale = (1.0f / PointScale) * 2;
+    scale = (1.0f / PointScale);
     MatrixUtils::ScaleMat4x4(m_PointTransformationMatrix.GetData(), scale , scale, -scale);
+#endif
 }

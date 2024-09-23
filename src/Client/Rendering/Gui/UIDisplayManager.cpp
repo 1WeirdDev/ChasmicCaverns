@@ -82,6 +82,8 @@ void UIDisplayManager::DrawUI(UI* ui, int zIndex){
     Vec2<float>& globalPosition = ui->GetGlobalPosition();
     Vec2<float>& globalSize = ui->GetGlobalSize();
 
+    //CORE_DEBUG("Global ui pos {0} {1}", globalPosition.x, globalPosition.y);
+
     if(!ui->m_Visible){
         zIndex+=2;
         const std::vector<UI*>& children = ui->GetChildren();

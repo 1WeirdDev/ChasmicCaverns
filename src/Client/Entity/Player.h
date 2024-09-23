@@ -11,6 +11,7 @@ public:
     void Update();
     void Draw();
 
+    Vec3<float> GetPosition() const noexcept{return m_Position;}
     float* GetViewMatrix() const noexcept{return m_ViewMatrix.GetData();}
 private:
     Vec3<float> m_Position;

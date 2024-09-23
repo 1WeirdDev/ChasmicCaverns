@@ -9,7 +9,7 @@
 #include "Rendering/Gui/Gui.h"
 #include "Rendering/Shaders/ChunkShader.h"
 #include "Rendering/Shaders/PointShader.h"
-#include "Game/Chunk.h"
+#include "Game/Cave.h"
 
 class GameScene : public Scene{
 public:
@@ -25,12 +25,14 @@ public:
     bool OnMouseButtonEvent(int button, bool isDown, bool handled) override;
     void OnWindowResizeEvent(int width, int height) override;
 private:
+    /*
     PointShader m_PointShader;
     ChunkShader m_Shader;
-    Chunk m_Chunk;
+    Chunk m_Chunk;*/
+    Cave m_Cave;
     Player m_Player;
     BasicMesh m_BasicMesh;
     Gui m_Gui;
-    TextLabel* m_TextLabel = nullptr;
-    bool m_PolygonMode = false;
+    TextLabel* m_PositionLabel = nullptr;
+    TextLabel* m_FPSLabel = nullptr;
 };

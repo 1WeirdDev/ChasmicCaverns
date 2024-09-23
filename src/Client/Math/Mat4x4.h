@@ -25,12 +25,17 @@ public:
 
         m_Data[col * 4 + row] = value;
     }
+
+    Vec4<float> GetRow(int row){
+        Vec4<float> r(m_Data[row * 4] + 0, m_Data[row * 4] + 1,m_Data[row * 4] + 2,m_Data[row * 4] + 3);
+        return r;
+    }
+    float* GetData() const noexcept{return (float*)m_Data;}
+public:
     Vec4<float> operator [](int row) const {
         std::cout << "W" << GetValue(0, row) << std::endl;
         return Vec4(GetValue(0, row),GetValue(1, row),GetValue(2, row),GetValue(3, row));
     }
-
-    float* GetData() const noexcept{return (float*)m_Data;}
 private:
     float m_Data[16];
 };

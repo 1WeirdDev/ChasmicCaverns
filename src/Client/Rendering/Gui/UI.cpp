@@ -14,6 +14,18 @@ void UI::DeleteChildren(){
 
     m_Children.resize(0);
 }
+
+
+void UI::SetGlobalPosition(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY){
+    Vec2<float> globalPosition;
+    if(m_Parent)
+        globalPosition = m_Parent->GetGlobalPosition();
+    m_Position.m_ScaleX = scaleX - globalPosition.x;
+    m_Position.m_ScaleY = scaleY - globalPosition.y;
+    m_Position.m_OffsetX = offsetX;
+    m_Position.m_OffsetY = offsetY;
+    CalculateGlobalData();
+}
 void UI::SetPosition(float scaleX, float scaleY, uint16_t offsetX, uint16_t offsetY){
     m_Position.m_ScaleX = scaleX;
     m_Position.m_ScaleY = scaleY;

@@ -31,6 +31,7 @@ public:
     static Font* GetFont(const char* fontName);
 public:
     static TexturedMesh& GetTexturedMesh() noexcept {return s_TexturedMesh;}
+    static float* GetProjectionMatrix() noexcept{return s_ProjMatrix.GetData();}
 private:
     static UIFrameShader s_FrameShader;
     static UIImageShader s_ImageShader;

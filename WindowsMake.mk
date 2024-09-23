@@ -22,7 +22,7 @@ Files += $(SRC_DIR)Game.cpp $(SRC_DIR)Input/Input.cpp $(SRC_DIR)Entity/Player.cp
 Files += $(SRC_DIR)Scene/Scene.cpp $(SRC_DIR)Scene/SceneManager.cpp
 Files += $(SCENES_DIR)MainMenuScene.cpp $(SCENES_DIR)GameScene.cpp
 #Game Core
-Files += $(SRC_DIR)Game/Chunk.cpp $(SRC_DIR)Game/Marcher.cpp
+Files += $(SRC_DIR)Game/Cave.cpp $(SRC_DIR)Game/Region.cpp $(SRC_DIR)Game/Chunk.cpp $(SRC_DIR)Game/Marcher.cpp
 #Textures
 Files += $(SRC_DIR)Rendering/Textures/Texture.cpp
 #Meshes

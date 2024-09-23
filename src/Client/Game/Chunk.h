@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rendering/Mesh/BasicMesh.h"
+#include "Rendering/Mesh/TexturedMesh.h"
 #include "Rendering/Mesh/PointMesh.h"
 #include "Math/Mat4x4.h"
 #include "Math/Vec3.h"
@@ -42,6 +42,7 @@ public:
 
     float* GetTransformationMatrix() const noexcept{return m_TransformationMatrix.GetData();}
 private:
+    void CreateDouble(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
     void CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
 private:
     void AddVertex(uint8_t x, uint8_t y, uint8_t z) noexcept;
@@ -53,10 +54,12 @@ private:
     //Position in chunks not global position
     Vec3<int8_t> m_Position;
     Mat4x4 m_TransformationMatrix;
-    BasicMesh m_Mesh;
+    TexturedMesh m_Mesh;
     std::vector<uint8_t> m_Vertices;
     std::vector<uint16_t> m_Indices;
+    std::vector<uint8_t> m_TextureCoords;
     uint16_t m_VertexIndex = 0;
+    //Debug
 #ifndef DIST
 private:
     Mat4x4 m_PointTransformationMatrix;
