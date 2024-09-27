@@ -14,15 +14,17 @@ void PointMesh::CleanUp(){
 }
 void PointMesh::Create(uint8_t* vertices, uint16_t* indices, size_t vertexCount, size_t indexCount){
     glGenVertexArrays(1, &m_VaoId);
-    glGenBuffers(2, &m_VboId);
+    glGenBuffers(1, &m_VboId);
+    glGenBuffers(1, &m_EboId);
 
     glBindVertexArray(m_VaoId);
 
     //Vertices
-    glBindBuffer(GL_ARRAY_BUFFER, m_VboId);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(uint8_t) * vertexCount, vertices, GL_STATIC_DRAW);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, m_VboId);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(uint8_t) * vertexCount, vertices, GL_STATIC_DRAW);
+    
     glVertexAttribPointer(0, 3, GL_UNSIGNED_BYTE, false, sizeof(uint8_t) * 4, nullptr);
     glVertexAttribIPointer(1, 1, GL_UNSIGNED_BYTE, sizeof(uint8_t) * 4, (void*)(sizeof(uint8_t) * 3));
 
