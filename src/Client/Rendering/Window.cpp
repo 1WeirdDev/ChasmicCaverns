@@ -16,6 +16,10 @@ float Window::s_PixelSizeY = 0;
 
 GLFWwindow* Window::s_Window = nullptr;
 
+
+void APIENTRY callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam){
+    CORE_DEBUG("GL ERROR {0}, {1}, {2}, {3}, ({4})", source, type, id, severity, message);
+}
 void Window::Init(){
     if(!glfwInit()){
         CORE_ERROR("Failed to initialize glfw");
@@ -25,8 +29,14 @@ void Window::Init(){
 
     //Only not resizable because of resizing stopping events
     glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // uncomment this statement to fix compilation on OS X
+#ifndef DIST
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Cor
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+    glEnable(GL_DEBUG_OUTPUT);
+#endif
     //glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
     s_Window = glfwCreateWindow(s_Data.m_Width, s_Data.m_Height, "Chasmic Caverns", nullptr, nullptr);
     s_AspectRatio = (float)s_Data.m_Width / (float)s_Data.m_Height;
@@ -118,6 +128,10 @@ void Window::Init(){
         Input::OnMouseButtonEvent(button, action == GLFW_PRESS);
     });
 
+#ifndef DIST
+    glDebugMessageCallback(callback, nullptr);
+#endif
+
     glEnable(GL_DEPTH_TEST);
 	glEnable(GL_BLEND);
 
@@ -127,7 +141,7 @@ void Window::Init(){
     glEnable(GL_CULL_FACE);
     glCullFace(GL_FRONT);
 
-    glfwSwapInterval(0);
+    glfwSwapInterval(1);
     s_IsOpen = true;
 }
 void Window::Shutdown(){

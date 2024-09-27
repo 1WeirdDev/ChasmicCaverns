@@ -21,7 +21,10 @@ void ChunkShader::Create(){
     in vec2 textureCoords;\n \
     out vec4 color; \
     uniform sampler2D textureMap;\n \
-    void main(){color = texture(textureMap, textureCoords);}";
+    void main(){ \
+    //color = vec4(0.0, 0.0, 0.0, 1.0);\n \
+    color = texture(textureMap, textureCoords);\n \
+    }";
     CreateWithSource(vertexShaderData, fragmentShaderData);
 
     Start();
@@ -30,6 +33,7 @@ void ChunkShader::Create(){
     m_TransformationMatrixLocation = GetUniformLocation("transformationMatrix");
     m_ScaleLocation = GetUniformLocation("scale");
     m_PositionLocation = GetUniformLocation("position");
+    CORE_DEBUG("Compiled Chunk Shader");
 }
 
 void ChunkShader::LoadProjectionMatrix(float* data) const noexcept{

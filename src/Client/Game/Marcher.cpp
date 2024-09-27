@@ -16,7 +16,7 @@ void PrintUnidentifiedCase(uint8_t bitsEnabled, uint8_t blockId)
     for(size_t i = 0; i < casesFound.size(); i++)if(casesFound[i] == blockId)return; \
     casesFound.push_back(blockId); \
     std::bitset<sizeof(uint8_t) * 8> bits(blockId);
-    //CORE_DEBUG("Unidentified case. Bits Enabled : {0} BlockId: 0b{1}", bitsEnabled, bits.to_string());
+    CORE_DEBUG("Unidentified case. Bits Enabled : {0} BlockId: 0b{1}", bitsEnabled, bits.to_string());
 }
 #else
 #define PRNT_CASE(id, x, y, z)
@@ -61,9 +61,14 @@ void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
             bitsEnabled++;
     }
 
+    AddVertex(x, y, z);
+    AddVertex(x, y + 1, z);
+    AddVertex(x +  2, y, z);
+    AddFaces(1);
+
     if(blockId != 0){
         std::bitset<sizeof(uint8_t) * 8> bits(blockId);
-        //CORE_DEBUG("Creating data at ({0}, {1}, {2}) with {3} bits enabled. {4}", x, y, z, bitsEnabled, bits.to_string());
+        CORE_DEBUG("Creating data at ({0}, {1}, {2}) with {3} bits enabled. {4}", x, y, z, bitsEnabled, bits.to_string());
     }
     
     switch (bitsEnabled)

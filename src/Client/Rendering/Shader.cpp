@@ -66,7 +66,25 @@ void Shader::CreateWithSource(const char* vertexShaderData, const char* fragment
     glAttachShader(m_ProgramId, m_VertexShaderId);
     glAttachShader(m_ProgramId, m_FragmentShaderId);
 
+    GLint success;
     glLinkProgram(m_ProgramId);
+    glGetProgramiv(m_ProgramId, GL_LINK_STATUS, &success);
+    if (!success) {
+        CORE_ERROR("Failed to link shader");
+        
+		GLint maxLength = 0;
+		glGetShaderiv(m_ProgramId, GL_INFO_LOG_LENGTH, &maxLength);
+
+		// The maxLength includes the NULL character
+		std::vector<GLchar> errorLog(maxLength);
+		glGetProgramInfoLog(m_ProgramId, maxLength, &maxLength, &errorLog[0]);
+
+		char* data = new char[maxLength + 1];
+		data[maxLength] = 0;
+
+		for (unsigned short i = 0; i < maxLength; i++)data[i] = errorLog[i];
+		CORE_ERROR(data);
+    }
     glValidateProgram(m_ProgramId);
 
     glDetachShader(m_ProgramId, m_VertexShaderId);

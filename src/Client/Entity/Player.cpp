@@ -12,10 +12,10 @@ void Player::Init(){
 void Player::CleanUp(){
 }
 void Player::Update(){
-    m_Rotation.y += 35 * Input::GetMouseDeltaX() * Time::GetDeltaTime();
-    m_Rotation.z -= 35 * Input::GetMouseDeltaY() * Time::GetDeltaTime();
+    m_Rotation.y += 5.0f * Input::GetMouseDeltaX() * Time::GetDeltaTime();
+    m_Rotation.z -= 5.0f * Input::GetMouseDeltaY() * Time::GetDeltaTime();
 
-    m_Rotation.z = Mathf::Clamp(m_Rotation.z, Mathf::ToRadians(-90.0f), Mathf::ToRadians(90.0f));
+    m_Rotation.z = 0;//Mathf::Clamp(m_Rotation.z, Mathf::ToRadians(-90.0f), Mathf::ToRadians(90.0f));
 
     Vec3<float> moveDirection(0.0f);
     if(Input::IsKeyDown(GLFW_KEY_S)){

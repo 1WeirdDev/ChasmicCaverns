@@ -6,7 +6,6 @@
 Region::Region(){}
 Region::~Region(){}
 
-
 void Region::SetCave(Cave* cave){
     m_Cave = cave;
 }
@@ -27,8 +26,9 @@ void Region::Draw() const{
     const PointShader& pointShader = m_Cave->GetPointShader();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     bool polygonMode = m_Cave->IsPolygonMode();
+    glDisable(GL_CULL_FACE);
     if(polygonMode){
-        glDisable(GL_CULL_FACE);
+        //glDisable(GL_CULL_FACE);
         pointShader.Start();
 
         for(uint8_t i = 0; i < m_Chunks.size(); i++){
@@ -37,7 +37,7 @@ void Region::Draw() const{
         }
     }
     else{
-        glEnable(GL_CULL_FACE);
+        //glEnable(GL_CULL_FACE);
     }
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode ? GL_LINE : GL_FILL);
 #endif

@@ -15,9 +15,9 @@ void Chunk::CreatePointData(){
     SetPointId(3,1,1, 1);
     
     SetPointId(2,1,2, 1);
+    /*;
     
-    srand(time(NULL)); 
-
+    srand(time(NULL));
     for(unsigned char y = 0; y < ChunkWidth; y++){
         for(unsigned char z = 0; z < ChunkWidth; z++){
             for(unsigned char x = 0; x < ChunkWidth; x++){
@@ -27,9 +27,19 @@ void Chunk::CreatePointData(){
             }
         }
     }
+    */
+
+    for(unsigned char x = 0; x < 5; x++){
+        for(unsigned char y = 0; y < 5; y++){
+            CreateSingle(x, y, 0, 1);
+        }
+   }
 }
 void Chunk::CreateMeshData(){
     uint8_t blockId = 0;
+    m_Vertices.resize(0);
+    m_Indices.resize(0);
+    m_VertexIndex = 0;
     for(uint8_t y = 0; y < ChunkHeight - 1; y++){
         for(uint8_t z = 0; z < ChunkWidth - 1; z++){
             blockId = (uint8_t)((uint8_t)(IsPointEnabled(0, y + 1, z + 0) ? (uint8_t)FaceBit::FrontTopRight : 0) |
@@ -152,6 +162,7 @@ void Chunk::CreateMeshData(){
 #endif
 }
 void Chunk::CreateMesh(){
+    CORE_DEBUG("Creating chunk mesh with {0} Vertices, {1} Indices", m_Vertices.size(), m_Indices.size());
     m_Mesh.Create(3, VT_UNSIGNED_CHAR, FT_UNSIGNED_SHORT, VT_UNSIGNED_CHAR, m_Vertices.data(), m_Indices.data(), m_TextureCoords.data(), m_Vertices.size(), m_Indices.size(), m_TextureCoords.size());
 #ifndef DIST
     m_PointMesh.Create(m_PointVertices.data(), m_PointIndices.data(), m_PointVertices.size(), m_PointIndices.size());
