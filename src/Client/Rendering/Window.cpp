@@ -64,6 +64,8 @@ void Window::Init(){
         glfwTerminate();
         std::exit(-1);
     }
+
+    CORE_DEBUG("{0}", (const char*)glGetString(GL_VERSION));
     glfwSetWindowCloseCallback(s_Window, [](GLFWwindow* window){
         s_IsOpen = false;
     });

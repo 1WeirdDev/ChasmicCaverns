@@ -121,7 +121,7 @@ void TexturedMesh::Draw() const{
     if(!m_IsCreated)return;
 
     glBindVertexArray(m_VaoId);
-    glDrawElements(GL_TRIANGLES, m_IndexCount, m_GLIndexType, nullptr);
+    glDrawElements(GL_TRIANGLES, 12, m_GLIndexType, nullptr);
 }
 
 void TexturedMesh::DrawInstanced(size_t count) const{
