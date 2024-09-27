@@ -28,12 +28,6 @@ void Chunk::CreatePointData(){
         }
     }
     */
-
-    for(unsigned char x = 0; x < 5; x++){
-        for(unsigned char y = 0; y < 5; y++){
-            CreateSingle(x, y, 0, 1);
-        }
-   }
 }
 void Chunk::CreateMeshData(){
     uint8_t blockId = 0;
