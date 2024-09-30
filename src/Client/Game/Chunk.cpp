@@ -94,7 +94,7 @@ void Chunk::CreateMeshData(){
                 m_PointVertices.push_back(y * PointScale + 1);
                 m_PointVertices.push_back(z * PointScale + 0);
                 m_PointVertices.push_back(enabled);
-
+                
                 m_PointVertices.push_back(x * PointScale + 1);
                 m_PointVertices.push_back(y * PointScale + 0);
                 m_PointVertices.push_back(z * PointScale + 1);
