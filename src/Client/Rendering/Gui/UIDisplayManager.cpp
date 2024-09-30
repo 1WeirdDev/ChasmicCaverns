@@ -37,8 +37,8 @@ void UIDisplayManager::Init(){
         0,1,
         0,0
     };
-    s_BasicMesh.Create(2, VT_UNSIGNED_CHAR, FT_UNSIGNED_CHAR, &vertices, &indices, 8, 6);
-    s_TexturedMesh.Create(2, VT_UNSIGNED_CHAR, FT_UNSIGNED_CHAR, VT_UNSIGNED_CHAR, &vertices, &indices, &textureCoords, 8, 6, 8);
+    s_BasicMesh.Create(2, VT_UINT8, FT_UINT8, &vertices, &indices, 8, 6);
+    s_TexturedMesh.Create(2, VT_UINT8, FT_UINT8, VT_UINT8, &vertices, &indices, &textureCoords, 8, 6, 8);
     
     MatrixUtils::CreateOrthoProjection(s_ProjMatrix.GetData(), 0.0f, 1.0f, 0, 1, 1, 0);
 

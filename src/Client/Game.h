@@ -25,12 +25,10 @@ public:
     static void OnKeyEvent(int key, KeyAction action, unsigned char modifiers);
 
     static Mat4x4& GetProjectionMatrix() noexcept{return s_ProjMatrix;}
-    static const Shader& GetShader() noexcept {return s_Shader;}
     static int GetViewMatrixLocation() noexcept{return s_ViewMatrixLocation;}
 private:
     static Cave cave;
     static Mat4x4 s_ProjMatrix;
-    static Shader s_Shader;
     static BasicMesh s_BasicMesh;
     
     static int s_ProjMatrixLocation;

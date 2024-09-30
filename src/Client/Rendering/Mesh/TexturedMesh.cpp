@@ -28,22 +28,22 @@ void TexturedMesh::Create(unsigned char dimensions, VertexType vertexType, Index
 
     //Vertices
     switch(vertexType){
-    case VT_SIGNED_CHAR:
+    case VT_INT8:
         dataSize = sizeof(int8_t);
         break;
-    case VT_UNSIGNED_CHAR:
+    case VT_UINT8:
         dataSize = sizeof(uint8_t);
         break;
-    case VT_SIGNED_SHORT:
+    case VT_INT16:
         dataSize = sizeof(int16_t);
         break;
-    case VT_UNSIGNED_SHORT:
+    case VT_UINT16:
         dataSize = sizeof(uint16_t);
         break;
-    case VT_SIGNED_INT:
+    case VT_INT32:
         dataSize = sizeof(int32_t);
         break;
-    case VT_UNSIGNED_INT:
+    case VT_UINT32:
         dataSize = sizeof(uint32_t);
         break;
     case VT_FLOAT:
@@ -60,15 +60,15 @@ void TexturedMesh::Create(unsigned char dimensions, VertexType vertexType, Index
     glVertexAttribPointer(0, dimensions, glVertexType, false, 0, nullptr);
 
     switch(indexType){ 
-    case FT_UNSIGNED_CHAR:
+    case FT_UINT8:
         dataSize = sizeof(uint8_t);
         m_GLIndexType = GL_UNSIGNED_BYTE;
         break;
-    case FT_UNSIGNED_SHORT:
+    case FT_UINT16:
         dataSize = sizeof(uint16_t);
         m_GLIndexType = GL_UNSIGNED_SHORT;
         break;
-    case FT_UNSIGNED_INT:
+    case FT_UINT32:
         dataSize = sizeof(uint32_t);
         m_GLIndexType = GL_UNSIGNED_INT;
         break;
@@ -85,22 +85,22 @@ void TexturedMesh::Create(unsigned char dimensions, VertexType vertexType, Index
     //Vertices
     glVertexType = textureCoordType + 0x1400;    //GL HAS OFFSET 0x1400
     switch(textureCoordType){
-    case VT_SIGNED_CHAR:
+    case VT_INT8:
         dataSize = sizeof(int8_t);
         break;
-    case VT_UNSIGNED_CHAR:
+    case VT_UINT8:
         dataSize = sizeof(uint8_t);
         break;
-    case VT_SIGNED_SHORT:
+    case VT_INT16:
         dataSize = sizeof(int16_t);
         break;
-    case VT_UNSIGNED_SHORT:
+    case VT_UINT16:
         dataSize = sizeof(uint16_t);
         break;
-    case VT_SIGNED_INT:
+    case VT_INT32:
         dataSize = sizeof(int32_t);
         break;
-    case VT_UNSIGNED_INT:
+    case VT_UINT32:
         dataSize = sizeof(uint32_t);
         break;
     case VT_FLOAT:

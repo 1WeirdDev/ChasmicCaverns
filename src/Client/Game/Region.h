@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Chunk.h"
+#include "Rendering/Mesh/BasicMesh.h"
 
 class Cave;
 class Region{
@@ -16,5 +17,6 @@ public:
     void Draw() const;
 private:
     Cave* m_Cave = nullptr;
+    BasicMesh mesh;
     std::array<Chunk, RegionChunkWidth * RegionChunkWidth> m_Chunks;
 };

@@ -166,7 +166,7 @@ void Chunk::CreateMeshData(){
 void Chunk::CreateMesh(){
     CORE_DEBUG("VERT {0}", (int)m_Vertices.size());
     CORE_DEBUG("Creating chunk mesh with {0} Vertices, {1} Indices", m_Vertices.size(), m_Indices.size());
-    m_Mesh.Create(3, VT_UNSIGNED_CHAR, FT_UNSIGNED_SHORT, VT_UNSIGNED_CHAR, m_Vertices.data(), m_Indices.data(), m_TextureCoords.data(), m_Vertices.size(), m_Indices.size(), m_TextureCoords.size());
+    m_Mesh.Create(3, VT_UINT8, FT_UINT16, VT_UINT8, m_Vertices.data(), m_Indices.data(), m_TextureCoords.data(), m_Vertices.size(), m_Indices.size(), m_TextureCoords.size());
 #ifndef DIST
     m_PointMesh.Create(m_PointVertices.data(), m_PointIndices.data(), m_PointVertices.size(), m_PointIndices.size());
 #endif

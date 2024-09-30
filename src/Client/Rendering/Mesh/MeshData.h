@@ -1,22 +1,22 @@
 #pragma once
 
 enum VertexType{
-    VT_SIGNED_CHAR = 0,
-    VT_UNSIGNED_CHAR,
+    VT_INT8 = 0,
+    VT_UINT8,
 
-    VT_SIGNED_SHORT,
-    VT_UNSIGNED_SHORT,
+    VT_INT16,
+    VT_UINT16,
     
-    VT_SIGNED_INT,
-    VT_UNSIGNED_INT,
+    VT_INT32,
+    VT_UINT32,
 
     VT_FLOAT
 };
 
 enum IndexType{
-    FT_UNSIGNED_CHAR = 0,
+    FT_UINT8 = 0,
 
-    FT_UNSIGNED_SHORT,
+    FT_UINT16,
 
-    FT_UNSIGNED_INT,
+    FT_UINT32,
 };

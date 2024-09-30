@@ -26,7 +26,7 @@ void GameScene::Init() {
     unsigned int indices[6]{
         0,1,2,2,1,3
     };
-    m_BasicMesh.Create(3, VT_FLOAT, FT_UNSIGNED_INT, &vertices, &indices, 12, 6);
+    m_BasicMesh.Create(3, VT_FLOAT, FT_UINT32, &vertices, &indices, 12, 6);
     
     Frame* f = m_Gui.CreateChild<Frame>();
     f->SetSize(0.25f, 0.25f, 0, 0);
@@ -79,12 +79,11 @@ void GameScene::Update() {
    // m_Cave.LoadViewMatrix(m_Player.GetViewMatrix());
 }
 void GameScene::Draw() {
-    Game::GetShader().Start();
-    m_Player.Draw();
+    //m_Player.Draw();
     //m_Cave.Draw();
     
-    glClear(GL_DEPTH_BUFFER_BIT);
-    m_Gui.Draw();
+    //glClear(GL_DEPTH_BUFFER_BIT);
+    //m_Gui.Draw();
 }
 bool GameScene::OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers, bool handled){
     if(handled)return false;

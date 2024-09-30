@@ -43,15 +43,12 @@ void Player::Update(){
 
     float speed = 10;
     m_Position += moveDirection * speed;
-
-    Game::GetShader().Start();
+    
     m_ViewMatrix.SetIdentity();
 
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.z, Vec3<float>(1.0f, 0.0f, 0.0f));
     MatrixUtils::RotateMat4x4(m_ViewMatrix.GetData(), m_Rotation.y, Vec3<float>(0.0f, 1.0f, 0.0f));
     MatrixUtils::TranslateMat4x4<float>(m_ViewMatrix.GetData(), -m_Position);
-
-    Shader::LoadMat4x4(Game::GetViewMatrixLocation(), m_ViewMatrix.GetData());
 }
 void Player::Draw(){
     //CORE_DEBUG("PLR POSITION ({0}, {1}, {2})", m_Position.x, m_Position.y, m_Position.z);
