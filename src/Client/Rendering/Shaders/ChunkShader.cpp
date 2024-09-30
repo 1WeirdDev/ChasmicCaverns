@@ -21,8 +21,8 @@ void ChunkShader::Create(){
     out vec4 color; \
     uniform sampler2D textureMap;\n \
     void main(){ \
-    //color = vec4(0.0, 0.0, 0.0, 1.0);\n \
-    color = texture(textureMap, textureCoords);\n \
+    color = vec4(0.0, 0.0, 0.0, 1.0);\n \
+    //color = texture(textureMap, textureCoords);\n \
     }";
     CreateWithSource(vertexShaderData, fragmentShaderData);
 
