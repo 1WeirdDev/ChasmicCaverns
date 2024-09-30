@@ -28,8 +28,8 @@ void UITextShader::Create(){
 		RenderData render_data[100]; \
 	};\
     \
-    in vec2 vertex; \
-    in vec2 in_text_coord; \
+    layout(location = 0)in vec2 vertex; \
+    layout(location = 1)in vec2 in_text_coord; \
     out vec2 text_coords; \
     void main(){ \
         vec2 position = vec2(render_data[gl_InstanceID].x, render_data[gl_InstanceID].y);\

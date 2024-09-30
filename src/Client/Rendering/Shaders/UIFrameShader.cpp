@@ -4,7 +4,7 @@
 #include "Core/Logger.h"
 void UIFrameShader::Create(){
     const char* vertexShaderData = "#version 330 core\n \
-    in vec2 vertex;\n \
+    layout(location = 0)in vec2 vertex;\n \
     uniform mat4 projMatrix;\n \
     uniform vec2 uiScale;\n \
     uniform vec2 uiPos;\n \

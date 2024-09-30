@@ -14,15 +14,14 @@ void ChunkShader::Create(){
     uniform vec2 position;\n \
     void main(void){ \
     textureCoords = textureCoord;\n \
-    gl_Position = projMatrix * viewMatrix  * vec4(vertex, 1.0);}";
+    gl_Position = projMatrix * viewMatrix * transformationMatrix * vec4(vertex, 1.0);}";
 
     const char* fragmentShaderData = "#version 330 core\n \
     in vec2 textureCoords;\n \
     out vec4 color; \
     uniform sampler2D textureMap;\n \
     void main(void){ \
-    color = vec4(0.0, 0.0, 0.0, 1.0);\n \
-    //color = texture(textureMap, textureCoords);\n \
+    color = texture(textureMap, textureCoords);\n \
     }";
     CreateWithSource(vertexShaderData, fragmentShaderData);
 

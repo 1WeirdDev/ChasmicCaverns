@@ -16,7 +16,6 @@ void Chunk::CreatePointData(){
     
     SetPointId(2,1,2, 1);
     /*;
-    
     srand(time(NULL));
     for(unsigned char y = 0; y < ChunkWidth; y++){
         for(unsigned char z = 0; z < ChunkWidth; z++){
@@ -56,11 +55,6 @@ void Chunk::CreateMeshData(){
                 (IsPointEnabled(x + 1,y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0);
 
                 CreateData(x* 2, y * 2, z * 2, blockId);
-
-                AddVertex(x * 2, y * 2, z * 2);
-                AddVertex(x * 2, y * 2 + 1, z * 2);
-                AddVertex(x * 2 + 1, y * 2, z * 2);
-                AddFaces(1);
             }
         }
     }
@@ -94,7 +88,7 @@ void Chunk::CreateMeshData(){
                 m_PointVertices.push_back(y * PointScale + 1);
                 m_PointVertices.push_back(z * PointScale + 0);
                 m_PointVertices.push_back(enabled);
-                
+
                 m_PointVertices.push_back(x * PointScale + 1);
                 m_PointVertices.push_back(y * PointScale + 0);
                 m_PointVertices.push_back(z * PointScale + 1);
@@ -164,8 +158,6 @@ void Chunk::CreateMeshData(){
 #endif
 }
 void Chunk::CreateMesh(){
-    CORE_DEBUG("VERT {0}", (int)m_Vertices.size());
-    CORE_DEBUG("Creating chunk mesh with {0} Vertices, {1} Indices", m_Vertices.size(), m_Indices.size());
     m_Mesh.Create(3, VT_UINT8, FT_UINT16, VT_UINT8, m_Vertices.data(), m_Indices.data(), m_TextureCoords.data(), m_Vertices.size(), m_Indices.size(), m_TextureCoords.size());
 #ifndef DIST
     m_PointMesh.Create(m_PointVertices.data(), m_PointIndices.data(), m_PointVertices.size(), m_PointIndices.size());
@@ -179,8 +171,6 @@ void Chunk::CleanUp(){
     m_Mesh.CleanUp();
 }
 void Chunk::Draw() const{
-    glClear(GL_DEPTH_BUFFER_BIT);
-    glClear(GL_COLOR_BUFFER_BIT);
     m_Mesh.Draw();
 }
 

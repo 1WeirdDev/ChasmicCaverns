@@ -5,8 +5,8 @@
 
 void PointShader::Create(){
     const char* vertexShaderData = "#version 330 core\n \
-    in vec3 vertex;\n \
-    in int enabled;\n \
+    layout(location = 0) in vec3 vertex;\n \
+    layout(location = 1) in int enabled;\n \
     out vec3 pointColor;\n \
     uniform mat4 projMatrix;\n \
     uniform mat4 viewMatrix;\n \

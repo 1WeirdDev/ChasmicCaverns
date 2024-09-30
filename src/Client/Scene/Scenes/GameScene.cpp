@@ -62,7 +62,7 @@ void GameScene::CleanUp() {
 }
 void GameScene::Update() {
     m_Player.Update();
-    //m_FPSLabel->SetText(("FPS: " + std::to_string((int)(1.0 / (double)Time::GetDeltaTime()))).c_str());
+    m_FPSLabel->SetText(("FPS: " + std::to_string((int)(1.0 / (double)Time::GetDeltaTime()))).c_str());
 
     Vec3<float> position = m_Player.GetPosition();
     m_PositionLabel->SetText((std::to_string((int)position.x) + ", " + std::to_string((int)position.y) + ", " + std::to_string((int)position.z)).c_str());

@@ -4,8 +4,8 @@
 #include "Core/Logger.h"
 void UIImageShader::Create(){
     const char* vertexShaderData = "#version 330 core\n \
-    in vec2 vertex;\n \
-    in vec2 textureCoord;\n \
+    layout(location = 0)in vec2 vertex;\n \
+    layout(location = 1)in vec2 textureCoord;\n \
     uniform mat4 projMatrix;\n \
     uniform vec2 uiScale;\n \
     uniform vec2 uiPos;\n \
