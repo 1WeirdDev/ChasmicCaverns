@@ -49,3 +49,5 @@ rebuildnrun:build_pch build run
 
 push:
 	Push.bat
+pull:
+	Pull.bat

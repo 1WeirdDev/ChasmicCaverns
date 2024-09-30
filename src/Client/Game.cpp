@@ -7,6 +7,7 @@
 #include "Rendering/Gui/UIDisplayManager.h"
 #include "Core/Mathf.h"
 
+Player Game::player;
 Cave Game::cave;
 Mat4x4 Game::s_ProjMatrix;
 BasicMesh Game::s_BasicMesh;
@@ -26,12 +27,13 @@ void Game::Init(){
 
     SceneManager::CreateScene<MainMenuScene>();
 
+    player.Init();
     cave.Init();
     CORE_INFO("Initialized");
 }
 void Game::Shutdown(){
     CORE_INFO("Shutting Down");
-
+    player.CleanUp();
     SceneManager::Shutdown();
     UIDisplayManager::Shutdown();
     Window::Shutdown();
@@ -41,6 +43,7 @@ void Game::Update(){
     Time::Update();
     //SceneManager::Update();
     //SceneManager::Draw();
+    player.Update();
     cave.Draw();
     Input::Update();
 

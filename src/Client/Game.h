@@ -7,6 +7,7 @@
 #include "Rendering/Mesh/BasicMesh.h"
 #include "Math/Mat4x4.h"
 #include "Input/Input.h"
+#include "Entity/Player.h"
 
 #include "Game/Cave.h"
 
@@ -26,8 +27,11 @@ public:
 
     static Mat4x4& GetProjectionMatrix() noexcept{return s_ProjMatrix;}
     static int GetViewMatrixLocation() noexcept{return s_ViewMatrixLocation;}
+
+    static Player& GetPlayer() noexcept{return player;}
 private:
     static Cave cave;
+    static Player player;
     static Mat4x4 s_ProjMatrix;
     static BasicMesh s_BasicMesh;
     

@@ -2,6 +2,7 @@
 
 #include "Region.h"
 #include "Cave.h"
+#include "Game.h"
 
 Region::Region(){}
 Region::~Region(){}
@@ -21,26 +22,27 @@ void Region::CreateChunks(){
         }
     }*/
 
-    uint8_t vertices[8]{
-        0,0,
-        0,1,
-        1,0,
-        1,1
+    float vertices[12]{
+        0,0,-5,
+        0,1,-5,
+        1,0,-5,
+        1,1,-5
     };
-
+    
     uint8_t indices[6]{
         0,1,2,2,1,3
     };
-    mesh.Create(2, VT_UINT8, FT_UINT8, &vertices, &indices, 8, 6);
 
-    shader.CreateWithSource(" \
-    #version 330 core\n in vec2 position; \
-    void main(){gl_Position = vec4(position, 0.0, 1.0);}",
-    "#version 330 core\n \ out vec4 color; void main(){color = vec4(1.0, 0.0, 0.0, 1.0);}");
+    mesh.Create(3, VT_FLOAT, FT_UINT8, &vertices, &indices, 12, 6);
+    shader.Create();
 }
 
 void Region::Draw() const{
     shader.Start();
+    shader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
+    Mat4x4 mat;
+    shader.LoadViewMatrix(mat.GetData());
+    shader.LoadTransformationMatrix(mat.GetData());
     glDisable(GL_CULL_FACE);
     mesh.Draw();
     
