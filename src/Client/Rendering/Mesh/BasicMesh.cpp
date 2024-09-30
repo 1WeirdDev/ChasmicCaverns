@@ -40,6 +40,8 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
         dataSize = sizeof(float);
         break;
     }
+
+    CORE_DEBUG("CREATING VBASIC MESH VERTEX TYPE {0} Size {1}", glVertexType, dataSize);
     
     glBindVertexArray(m_VaoId);
 
@@ -66,6 +68,7 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
         CORE_WARN("Invalid Index Type for Basic mesh");
         break;
     }
+    CORE_DEBUG("CREATING VBASIC MESH Index TYPE {0} Size {1}", glVertexType, dataSize);
     //Indices
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize * indexCount, indices, GL_STATIC_DRAW);
