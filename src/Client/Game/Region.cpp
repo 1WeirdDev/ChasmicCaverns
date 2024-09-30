@@ -11,7 +11,6 @@ void Region::SetCave(Cave* cave){
     m_Cave = cave;
 }
 void Region::CreateChunks(){
-    /*
     for(uint8_t z = 0; z< RegionChunkWidth;z++){
         for(uint8_t x = 0; x< RegionChunkWidth;x++){
             unsigned int i = z * RegionChunkWidth + x;
@@ -20,40 +19,16 @@ void Region::CreateChunks(){
             m_Chunks[i].CreateMeshData();
             m_Chunks[i].CreateMesh();
         }
-    }*/
-
-    float vertices[12]{
-        0,0,-1,
-        0,1,-1,
-        1,0,-1,
-        1,1,-1
-    };
-
-    uint8_t indices[6]{
-        0,1,2,2,1,3
-    };
-
-    mesh.Create(3, VT_FLOAT, FT_UINT8, &vertices, &indices, 12, 6);
-    shader.Create();
+    }
 }
 
 void Region::Draw() const{
-    shader.Start();
-    shader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
-    Mat4x4 mat;
-    shader.LoadViewMatrix(mat.GetData());
-    shader.LoadTransformationMatrix(mat.GetData());
-    glDisable(GL_CULL_FACE);
-    mesh.Draw();
-    
-    /*
 #ifndef DIST
     const PointShader& pointShader = m_Cave->GetPointShader();
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     bool polygonMode = m_Cave->IsPolygonMode();
-    glDisable(GL_CULL_FACE);
     if(polygonMode){
-        //glDisable(GL_CULL_FACE);
+        glDisable(GL_CULL_FACE);
         pointShader.Start();
 
         for(uint8_t i = 0; i < m_Chunks.size(); i++){
@@ -62,7 +37,7 @@ void Region::Draw() const{
         }
     }
     else{
-        //glEnable(GL_CULL_FACE);
+        glEnable(GL_CULL_FACE);
     }
     glPolygonMode(GL_FRONT_AND_BACK, polygonMode ? GL_LINE : GL_FILL);
 #endif
@@ -76,5 +51,5 @@ void Region::Draw() const{
 
 #ifndef DIST
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-#endif*/
+#endif
 }

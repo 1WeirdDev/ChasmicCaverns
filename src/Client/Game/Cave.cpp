@@ -20,6 +20,7 @@ void Cave::Init(){
     m_Region.CreateChunks();
 
     m_Texture.LoadFromPath("res/Textures/texture1.jpg");
+    CORE_DEBUG("Initialized Cave");
 }
 
 void Cave::Draw() const{
