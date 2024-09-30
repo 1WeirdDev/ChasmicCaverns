@@ -2,6 +2,7 @@
 
 #include "Chunk.h"
 #include "Rendering/Mesh/BasicMesh.h"
+#include "Rendering/Shader.h"
 
 class Cave;
 class Region{
@@ -17,6 +18,7 @@ public:
     void Draw() const;
 private:
     Cave* m_Cave = nullptr;
+    Shader shader;
     BasicMesh mesh;
     std::array<Chunk, RegionChunkWidth * RegionChunkWidth> m_Chunks;
 };

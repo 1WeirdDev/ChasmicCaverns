@@ -32,10 +32,15 @@ void Region::CreateChunks(){
         0,1,2,2,1,3
     };
     mesh.Create(2, VT_UINT8, FT_UINT8, &vertices, &indices, 8, 6);
+
+    shader.CreateWithSource(" \
+    #version 330 core\n in vec2 position; \
+    void main(){gl_Position = vec4(position, 0.0, 1.0);}",
+    "#version 330 core\n \ out vec4 color; void main(){color = vec4(1.0, 0.0, 0.0, 1.0);}");
 }
 
 void Region::Draw() const{
-    Shader::Stop();
+    shader.Start();
     glDisable(GL_CULL_FACE);
     mesh.Draw();
     
