@@ -5,14 +5,14 @@
 
 void ChunkShader::Create(){
     const char* vertexShaderData = "#version 330 core\n \
-    in vec3 vertex;\n \
-    in vec2 textureCoord;\n \
+    layout(location = 0) in vec3 vertex;\n \
+    layout(location = 1) in vec2 textureCoord;\n \
     out vec2 textureCoords;\n \
     uniform mat4 projMatrix;\n \
     uniform mat4 viewMatrix;\n \
     uniform mat4 transformationMatrix;\n \
     uniform vec2 position;\n \
-    void main(){ \
+    void main(void){ \
     textureCoords = textureCoord;\n \
     gl_Position = vec4(vertex, 1.0);}";
 
@@ -20,7 +20,7 @@ void ChunkShader::Create(){
     in vec2 textureCoords;\n \
     out vec4 color; \
     uniform sampler2D textureMap;\n \
-    void main(){ \
+    void main(void){ \
     color = vec4(0.0, 0.0, 0.0, 1.0);\n \
     //color = texture(textureMap, textureCoords);\n \
     }";
