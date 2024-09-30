@@ -14,7 +14,7 @@ void ChunkShader::Create(){
     uniform vec2 position;\n \
     void main(){ \
     textureCoords = textureCoord;\n \
-    gl_Position = projMatrix * viewMatrix * transformationMatrix * vec4(vertex, 1.0);}";
+    gl_Position = projMatrix * vec4(vertex, 1.0);}";
 
     const char* fragmentShaderData = "#version 330 core\n \
     in vec2 textureCoords;\n \
