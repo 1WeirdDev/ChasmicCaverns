@@ -77,7 +77,6 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
 void BasicMesh::Draw()const{
     if(!m_IsCreated)return;
     glBindVertexArray(m_VaoId);
-    glEnableVertexAttribArray(0);
     glDrawElements(GL_TRIANGLES, m_IndexCount, m_GLIndexType, nullptr);
 }
 

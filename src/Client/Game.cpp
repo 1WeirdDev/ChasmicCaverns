@@ -7,6 +7,7 @@
 #include "Rendering/Gui/UIDisplayManager.h"
 #include "Core/Mathf.h"
 
+Cave Game::cave;
 Mat4x4 Game::s_ProjMatrix;
 Shader Game::s_Shader;
 BasicMesh Game::s_BasicMesh;
@@ -49,8 +50,9 @@ void Game::Shutdown(){
 }
 void Game::Update(){
     Time::Update();
-    SceneManager::Update();
-    SceneManager::Draw();
+    //SceneManager::Update();
+    //SceneManager::Draw();
+    cave.Draw();
     Input::Update();
 
     //Drawing

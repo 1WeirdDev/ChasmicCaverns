@@ -56,6 +56,11 @@ void Chunk::CreateMeshData(){
                 (IsPointEnabled(x + 1,y + 0, z + 1) ? (uint8_t)FaceBit::BackBottomRight : 0);
 
                 CreateData(x* 2, y * 2, z * 2, blockId);
+
+                AddVertex(x * 2, y * 2, z * 2);
+                AddVertex(x * 2, y * 2 + 1, z * 2);
+                AddVertex(x * 2 + 1, y * 2, z * 2);
+                AddFaces(1);
             }
         }
     }
@@ -174,6 +179,8 @@ void Chunk::CleanUp(){
     m_Mesh.CleanUp();
 }
 void Chunk::Draw() const{
+    glClear(GL_DEPTH_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT);
     m_Mesh.Draw();
 }
 

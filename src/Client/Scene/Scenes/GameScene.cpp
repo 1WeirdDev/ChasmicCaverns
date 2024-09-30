@@ -56,7 +56,7 @@ void GameScene::Init() {
     */
     //m_PointShader.LoadTransformationMatrix(mat.GetData());
 
-    m_Cave.Init();
+    //m_Cave.Init();
     //m_Chunk.CreatePointData();
     //m_Chunk.CreateMeshData();
     //m_Chunk.CreateMesh();
@@ -76,12 +76,12 @@ void GameScene::Update() {
 
     Vec3<float> position = m_Player.GetPosition();
     m_PositionLabel->SetText((std::to_string((int)position.x) + ", " + std::to_string((int)position.y) + ", " + std::to_string((int)position.z)).c_str());
-    m_Cave.LoadViewMatrix(m_Player.GetViewMatrix());
+   // m_Cave.LoadViewMatrix(m_Player.GetViewMatrix());
 }
 void GameScene::Draw() {
     Game::GetShader().Start();
     m_Player.Draw();
-    m_Cave.Draw();
+    //m_Cave.Draw();
     
     glClear(GL_DEPTH_BUFFER_BIT);
     m_Gui.Draw();
@@ -89,7 +89,7 @@ void GameScene::Draw() {
 bool GameScene::OnKeyDownEvent(int key, KeyAction action, unsigned char modifiers, bool handled){
     if(handled)return false;
     if(key == GLFW_KEY_R && action == KeyAction::Press){
-        m_Cave.TogglePolygonMode();
+        //m_Cave.TogglePolygonMode();
     }
     return false;
 }

@@ -112,16 +112,18 @@ void TexturedMesh::Create(unsigned char dimensions, VertexType vertexType, Index
     glBufferData(GL_ARRAY_BUFFER, dataSize * textureCoordCount, textureCoords, GL_STATIC_DRAW);
     glEnableVertexAttribArray(1);
     glVertexAttribPointer(1, 2, glVertexType, false, 0, nullptr);
-    
+
+    m_VertexCount = vertexCount;
     m_IndexCount = indexCount;
     m_IsCreated = true;
-     CORE_DEBUG("CREATED TEXTUREDD  MESH \n");
+    CORE_DEBUG("CREATED TEXTUREDD  MESH \n");
 }
 void TexturedMesh::Draw() const{
     if(!m_IsCreated)return;
 
     glBindVertexArray(m_VaoId);
-    glDrawElements(GL_TRIANGLES, 12, m_GLIndexType, nullptr);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EboId);
+    glDrawElements(GL_TRIANGLES, m_IndexCount, m_GLIndexType, nullptr);
 }
 
 void TexturedMesh::DrawInstanced(size_t count) const{

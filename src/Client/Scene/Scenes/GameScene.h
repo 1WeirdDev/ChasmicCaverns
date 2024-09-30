@@ -29,7 +29,7 @@ private:
     PointShader m_PointShader;
     ChunkShader m_Shader;
     Chunk m_Chunk;*/
-    Cave m_Cave;
+   // Cave m_Cave;
     Player m_Player;
     BasicMesh m_BasicMesh;
     Gui m_Gui;

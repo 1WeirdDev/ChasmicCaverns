@@ -120,12 +120,16 @@ void Font::LoadFont(const char *location)
     FT_Done_FreeType(ft);
 
     m_Shader.Create();
+    m_Shader.Start();
     UIDisplayManager::GetTexturedMesh().BindVao();
     
     //Bind to textured mesh from ui display manager
     //Create buffers
     glGenBuffers(2, &m_SSBO_Id);
 
+    if(!glIsProgram(m_Shader.GetProgramId())){
+        CORE_WARN("NOT PROGRAM");
+    }
     //We only care about the first 128 charcte
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_SSBO_Id);
     glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(CharacterDrawData) * 127 , nullptr, GL_STATIC_DRAW);
