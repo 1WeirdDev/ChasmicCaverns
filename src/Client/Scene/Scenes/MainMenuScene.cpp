@@ -46,7 +46,7 @@ void MainMenuScene::CleanUp() {
     m_Gui.CleanUp();
 }
 void MainMenuScene::Update() {
-    //m_TextLabel->SetText(std::to_string((int)floor(1.0f /  Time::GetDeltaTime())).c_str());
+    
 }
 void MainMenuScene::Draw() {
     m_Gui.Draw();

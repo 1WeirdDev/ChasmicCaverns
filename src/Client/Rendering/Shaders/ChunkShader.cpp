@@ -6,22 +6,24 @@
 void ChunkShader::Create(){
     const char* vertexShaderData = "#version 330 core\n \
     layout(location = 0) in vec3 vertex;\n \
-    layout(location = 1) in vec2 textureCoord;\n \
-    out vec2 textureCoords;\n \
+    layout(location = 1) in int vertexColorIndex;\n \
+    out vec3 vertexColor;\n \
     uniform mat4 projMatrix;\n \
     uniform mat4 viewMatrix;\n \
     uniform mat4 transformationMatrix;\n \
     uniform vec2 position;\n \
+    \
+    uniform vec3 colors[3];\n \
+    \
     void main(void){ \
-    textureCoords = textureCoord;\n \
+    vertexColor = colors[vertexColorIndex];\n \
     gl_Position = projMatrix * viewMatrix * transformationMatrix * vec4(vertex, 1.0);}";
 
     const char* fragmentShaderData = "#version 330 core\n \
-    in vec2 textureCoords;\n \
+    in vec3 vertexColor;\n \
     out vec4 color; \
-    uniform sampler2D textureMap;\n \
     void main(void){ \
-    color = texture(textureMap, textureCoords);\n \
+        color = vec4(vertexColor, 1.0);\n \
     }";
     CreateWithSource(vertexShaderData, fragmentShaderData);
 
@@ -33,6 +35,11 @@ void ChunkShader::Create(){
     CORE_DEBUG("Compiled Chunk Shader");
 }
 
+void ChunkShader::LoadColor(int index, float x, float y, float z) const noexcept{
+    GLint location = GetUniformLocation((std::string("colors[") + std::to_string(index) + "]").c_str());
+    CORE_DEBUG("LOADING COLOR AT {0}", location);
+    LoadVector3(location, x, y, z);
+}
 void ChunkShader::LoadProjectionMatrix(float* data) const noexcept{
     LoadMat4x4(m_ProjMatrixLocation, data);
 }

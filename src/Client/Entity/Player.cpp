@@ -12,8 +12,8 @@ void Player::Init(){
 void Player::CleanUp(){
 }
 void Player::Update(){
-    m_Rotation.y += 5.0f * Input::GetMouseDeltaX() * Time::GetDeltaTime();
-    m_Rotation.z -= 5.0f * Input::GetMouseDeltaY() * Time::GetDeltaTime();
+    m_Rotation.y += 0.01f * Input::GetMouseDeltaX();
+    m_Rotation.z -= 0.01f * Input::GetMouseDeltaY();
 
     m_Rotation.z = Mathf::Clamp(m_Rotation.z, Mathf::ToRadians(-90.0f), Mathf::ToRadians(90.0f));
 

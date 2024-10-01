@@ -1,4 +1,4 @@
-#include "stdafx.h"
+#include "pch.h"
 #include "Frustum.h"
 
 #include "glm/gtc/matrix_transform.hpp"
@@ -6,6 +6,7 @@
 
 Frustum::Frustum(){}
 void Frustum::ExtractFrustumPlanes(const Mat4x4& viewProjectionMatrix) {
+    /*
     // Left
     m_FrustumPlanes[0] = viewProjectionMatrix.GetRow(3) + viewProjectionMatrix.GetRow(0);
     // Right
@@ -25,6 +26,7 @@ void Frustum::ExtractFrustumPlanes(const Mat4x4& viewProjectionMatrix) {
         Vec3<float> f(plane.x, plane.y, plane.z);
         m_FrustumPlanes[i] /= f.GetMagnitude();
     }
+    */
 }
 
 //bool CameraFrustum::IsChunkInFrustum(const glm::vec3& min, const glm::vec3& max)  {

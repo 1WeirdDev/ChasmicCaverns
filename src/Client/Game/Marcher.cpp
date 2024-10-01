@@ -35,22 +35,13 @@ void Chunk::AddFaces(uint8_t amount)
     }
 }
 
-void Chunk::AddVertex(uint8_t x, uint8_t y, uint8_t z) noexcept
+void Chunk::AddVertex(uint8_t x, uint8_t y, uint8_t z, uint8_t color) noexcept
 {
-    m_Vertices.reserve(m_Vertices.size() + 3);
+    m_Vertices.reserve(m_Vertices.size() + 4);
     m_Vertices.push_back(x);
     m_Vertices.push_back(y);
     m_Vertices.push_back(z);
-
-    m_TextureCoords.reserve(m_TextureCoords.size() + 6);
-    m_TextureCoords.push_back(0);
-    m_TextureCoords.push_back(1);
-
-    m_TextureCoords.push_back(0);
-    m_TextureCoords.push_back(0);
-
-    m_TextureCoords.push_back(1);
-    m_TextureCoords.push_back(1);
+    m_Vertices.push_back(color);
 }
 void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
 {
@@ -61,11 +52,6 @@ void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
             bitsEnabled++;
     }
 
-    if(blockId != 0){
-        std::bitset<sizeof(uint8_t) * 8> bits(blockId);
-        CORE_DEBUG("Creating data at ({0}, {1}, {2}) with {3} bits enabled. {4}", x, y, z, bitsEnabled, bits.to_string());
-    }
-    
     switch (bitsEnabled)
     {
     case 0:
@@ -77,31 +63,57 @@ void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
     case 2:
         CreateDouble(x, y, z, blockId);
         break;
+    case 3:
+        switch(blockId){
+        case 0b01100100:
+            CreateSingle(x,y,z, 0b00100000);
+            CreateDouble(x, y, z, 0b01000100);
+            break;
+        }
+        break;
+    case 4:
+        switch(blockId){
+        case 0b11000110:
+            //AddVertex(x, y, z);
+            AddVertex(x, y, z + 1    , GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x + 2, y, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
+            AddVertex(x, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z));
+            
+            AddVertex(x + 2, y, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
+            AddVertex(x + 2, y + 1, z, GetPointIdFromVertexPos(x + 2, y, z));
+            AddVertex(x, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z));
+            
+            AddVertex(x, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z));
+            AddVertex(x + 2, y + 1, z, GetPointIdFromVertexPos(x + 2, y, z));
+            AddVertex(x + 1, y + 2, z, GetPointIdFromVertexPos(x, y + 2, z));
+            break;
+        }
+        break;
     case 7:
         switch(blockId){
         //Hide single edges
         case 0b01111111:
-            AddVertex(x, y + 1, z);
-            AddVertex(x, y + 2, z + 1);
-            AddVertex(x + 1, y + 2, z);
+            AddVertex(x, y + 1, z    , GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z + 2));
+            AddVertex(x + 1, y + 2, z, GetPointIdFromVertexPos(x + 2, y + 2, z));
             AddFaces(1);
             break;
         case 0b10111111:
-            AddVertex(x, y, z + 1);
-            AddVertex(x, y + 1, z);
-            AddVertex(x + 1, y, z);
+            AddVertex(x, y, z + 1, GetPointIdFromVertexPos(x, y, z + 2));
+            AddVertex(x, y + 1, z, GetPointIdFromVertexPos(x, y + 2, z));
+            AddVertex(x + 1, y, z, GetPointIdFromVertexPos(x + 2, y, z));
             AddFaces(1);
             break;
         case 0b11011111:
-            AddVertex(x, y + 1, z + 2);
-            AddVertex(x + 1, y + 2, z + 2);
-            AddVertex(x, y + 2, z + 1);
+            AddVertex(x, y + 1, z + 2    , GetPointIdFromVertexPos(x, y, z + 2));
+            AddVertex(x + 1, y + 2, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+            AddVertex(x, y + 2, z + 1    , GetPointIdFromVertexPos(x, y + 2, z));
             AddFaces(1);
             break;
         case 0b11101111:
-            AddVertex(x + 1, y, z + 2);
-            AddVertex(x, y + 1, z + 2);
-            AddVertex(x, y, z + 1);
+            AddVertex(x + 1, y, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+            AddVertex(x, y + 1, z + 2, GetPointIdFromVertexPos(x, y + 2, z + 2));
+            AddVertex(x, y, z + 1    , GetPointIdFromVertexPos(x, y, z));
             AddFaces(1);
             break;
         default:
@@ -119,20 +131,34 @@ void Chunk::CreateDouble(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId){
     switch(blockId){
     //Horizontal cases
     case 0b00001010:
-        AddVertex(x + 2, y + 1, z + 0);
-        AddVertex(x + 2, y + 1, z + 2);
-        AddVertex(x + 1, y + 2, z + 2);
+        AddVertex(x + 2, y + 1, z + 0, GetPointIdFromVertexPos(x + 2, y + 2, z));
+        AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+        AddVertex(x + 1, y + 2, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
 
-        AddVertex(x + 1, y + 2, z + 2);
-        AddVertex(x + 1, y + 2, z + 0);
-        AddVertex(x + 2, y + 1, z + 0);
+        AddVertex(x + 1, y + 2, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+        AddVertex(x + 1, y + 2, z + 0, GetPointIdFromVertexPos(x + 2, y + 2, z));
+        AddVertex(x + 2, y + 1, z + 0, GetPointIdFromVertexPos(x + 2, y + 2, z));
         AddFaces(2);
         break;
+    case 0b01000100:
+        AddVertex(0,1,0, GetPointIdFromVertexPos(x, y, z));
+        AddVertex(0,0,1, GetPointIdFromVertexPos(x, y, z));
+        AddVertex(2,0,1, GetPointIdFromVertexPos(x + 2, y, z));
+
+        AddVertex(2,0,1, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(2,1,0, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(0,1,0, GetPointIdFromVertexPos(x, y, z));
+        AddFaces(2);
+        break;
+    //Opposite edges
     case 0b000010100:
         CreateSingle(x, y, z, 0b000010000);
         CreateSingle(x, y, z, 0b000000100);
         break;
-    //Opposite edges
+    case 0b00100100:
+        CreateSingle(x, y, z, 0b00100000);
+        CreateSingle(x, y, z, 0b00000100);
+        break;
     case 0b010000010:
         CreateSingle(x, y, z, 0b000000010);
         CreateSingle(x, y, z, 0b010000000);
@@ -155,51 +181,51 @@ void Chunk::CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
     switch (blockId)
     {
     case 0b10000000:
-        AddVertex(x + 0, y + 1, z + 0);
-        AddVertex(x + 1, y + 2, z + 0);
-        AddVertex(x + 0, y + 2, z + 1);
+        AddVertex(x + 0, y + 1, z + 0, GetPointIdFromVertexPos(x, y + 2, z));
+        AddVertex(x + 1, y + 2, z + 0, GetPointIdFromVertexPos(x, y + 2, z));
+        AddVertex(x + 0, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z));
         AddFaces(1);
         break;
     case 0b01000000:
-        AddVertex(x + 0, y + 0, z + 1);
-        AddVertex(x + 1, y + 0, z + 0);
-        AddVertex(x + 0, y + 1, z + 0);
+        AddVertex(x + 0, y + 0, z + 1, GetPointIdFromVertexPos(x, y, z));
+        AddVertex(x + 1, y + 0, z + 0, GetPointIdFromVertexPos(x, y, z));
+        AddVertex(x + 0, y + 1, z + 0, GetPointIdFromVertexPos(x, y, z));
         AddFaces(1);
         break;
     case 0b00100000:
-        AddVertex(x + 0, y + 1, z + 2);
-        AddVertex(x + 0, y + 2, z + 1);
-        AddVertex(x + 1, y + 2, z + 2);
+        AddVertex(x + 0, y + 1, z + 2, GetPointIdFromVertexPos(x, y + 2, z + 2));
+        AddVertex(x + 0, y + 2, z + 1, GetPointIdFromVertexPos(x, y + 2, z + 2));
+        AddVertex(x + 1, y + 2, z + 2, GetPointIdFromVertexPos(x, y + 2, z + 2));
         AddFaces(1);
         break;
-    case 0b000010000:
-        AddVertex(x + 0, y + 0, z + 1);
-        AddVertex(x + 0, y + 1, z + 2);
-        AddVertex(x + 1, y + 0, z + 2);
+    case 0b00010000:
+        AddVertex(x + 0, y + 0, z + 1, GetPointIdFromVertexPos(x, y, z + 2));
+        AddVertex(x + 0, y + 1, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+        AddVertex(x + 1, y + 0, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
         AddFaces(1);
         break;
-    case 0b000001000:
-        AddVertex(x + 2, y + 1, z + 0);
-        AddVertex(x + 2, y + 2, z + 1);
-        AddVertex(x + 1, y + 2, z + 0);
+    case 0b00001000:
+        AddVertex(x + 2, y + 1, z + 0, GetPointIdFromVertexPos(x + 2, y + 2, z));
+        AddVertex(x + 2, y + 2, z + 1, GetPointIdFromVertexPos(x + 2, y + 2, z));
+        AddVertex(x + 1, y + 2, z + 0, GetPointIdFromVertexPos(x + 2, y + 2, z));
         AddFaces(1);
         break;
-    case 0b000000100:
-        AddVertex(x + 1, y + 0, z + 0);
-        AddVertex(x + 2, y + 0, z + 1);
-        AddVertex(x + 2, y + 1, z + 0);
+    case 0b00000100:
+        AddVertex(x + 1, y + 0, z + 0, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(x + 2, y + 0, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(x + 2, y + 1, z + 0, GetPointIdFromVertexPos(x + 2, y, z));
         AddFaces(1);
         break;
-    case 0b000000010:
-        AddVertex(x + 2, y + 1, z + 2);
-        AddVertex(x + 1, y + 2, z + 2);
-        AddVertex(x + 2, y + 2, z + 1);
+    case 0b00000010:
+        AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+        AddVertex(x + 1, y + 2, z + 2, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+        AddVertex(x + 2, y + 2, z + 1, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
         AddFaces(1);
         break;
-    case 0b000000001:
-        AddVertex(x + 1, y + 0, z + 2);
-        AddVertex(x + 2, y + 1, z + 2);
-        AddVertex(x + 2, y + 0, z + 1);
+    case 0b00000001:
+        AddVertex(x + 1, y + 0, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+        AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+        AddVertex(x + 2, y + 0, z + 1, GetPointIdFromVertexPos(x + 2, y, z + 2));
         AddFaces(1);
         break;
     default:

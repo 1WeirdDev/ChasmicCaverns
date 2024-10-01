@@ -13,6 +13,11 @@ void Cave::Init(){
 
     m_ChunkShader.Start();
     m_ChunkShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
+
+    //Loading Colors
+    m_ChunkShader.LoadColor(0, 0.5, 0.5, 0.0);
+    m_ChunkShader.LoadColor(1, 0.5, 0.5, 0.0);
+    m_ChunkShader.LoadColor(2, 0.25, 1, 0.0);
     m_PointShader.Start();
     m_PointShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
 
@@ -28,9 +33,13 @@ void Cave::Draw() const{
     m_Region.Draw();
 }
 
-void Cave::LoadViewMatrix(float* data) const noexcept{
+void Cave::LoadViewMatrix(float* data) noexcept{
     m_ChunkShader.Start();
     m_ChunkShader.LoadViewMatrix(data);
     m_PointShader.Start();
     m_PointShader.LoadViewMatrix(data);
+
+    Mat4x4 view(data);
+    Mat4x4 progViewMatrix = Game::GetProjectionMatrix() * view;
+    m_Frustum.ExtractFrustumPlanes(progViewMatrix);
 }

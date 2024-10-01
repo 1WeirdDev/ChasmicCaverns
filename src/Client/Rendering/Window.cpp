@@ -17,7 +17,8 @@ float Window::s_PixelSizeY = 0;
 GLFWwindow* Window::s_Window = nullptr;
 
 
-void APIENTRY callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam){
+void APIENTRY ErrorCallback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, const void* userParam){
+    if(severity != GL_DEBUG_SEVERITY_HIGH)return;
     CORE_DEBUG("GL ERROR {0}, {1}, {2}, {3}, ({4})", source, type, id, severity, message);
 }
 void Window::Init(){
@@ -36,10 +37,9 @@ void Window::Init(){
 #ifndef DIST
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE); // Cor
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
-    glEnable(GL_DEBUG_OUTPUT);
 #endif
     //glfwWindowHint(GLFW_DECORATED, GLFW_FALSE);
-    s_Window = glfwCreateWindow(s_Data.m_Width, s_Data.m_Height, "Chasmic Caverns", nullptr, nullptr);
+    s_Window = glfwCreateWindow(s_Data.m_Width, s_Data.m_Height, GAME_NAME, nullptr, nullptr);
     s_AspectRatio = (float)s_Data.m_Width / (float)s_Data.m_Height;
     s_InverseAspectRatio = (float)s_Data.m_Height / (float)s_Data.m_Width;
     s_PixelSizeX = 1.0f / (float)s_Data.m_Width;
@@ -132,7 +132,8 @@ void Window::Init(){
     });
 
 #ifndef DIST
-    glDebugMessageCallback(callback, nullptr);
+    glEnable(GL_DEBUG_OUTPUT);
+    glDebugMessageCallback(ErrorCallback, nullptr);
 #endif
 
     glEnable(GL_DEPTH_TEST);
@@ -146,7 +147,11 @@ void Window::Init(){
     
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+#ifdef DIST
     glfwSwapInterval(1);
+#else
+    glfwSwapInterval(0);
+#endif
     s_IsOpen = true;
 }
 void Window::Shutdown(){

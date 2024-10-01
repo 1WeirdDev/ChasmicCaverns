@@ -1,13 +1,25 @@
 #pragma once
-#include <string.h>
 
 #include "Vec4.h"
+
 class Mat4x4{
 public:
     Mat4x4(){
         SetIdentity();
     }
+    Mat4x4(float* data){
+        for(unsigned char i = 0; i < 16; i++){
+            m_Data[i] = data[i];
+        }
+    }
     ~Mat4x4(){}
+
+    Mat4x4(Mat4x4& other){
+        float* data = other.GetData();
+        for(uint8_t i = 0; i < 16; i++){
+            m_Data[i] = data[i];
+        }
+    }
 
     void SetIdentity() noexcept{
         memset(&m_Data, 0, sizeof(m_Data));
@@ -26,6 +38,20 @@ public:
         m_Data[col * 4 + row] = value;
     }
 
+    Mat4x4 operator*(const Mat4x4& rhs) const noexcept{             
+        Mat4x4 mat;
+        float* first = (float*)&m_Data;
+        float* second = rhs.GetData();
+        float* data = mat.GetData();
+        for (unsigned char row = 0; row < 4; ++row) {
+            for (unsigned char col = 0; col < 4; ++col) {
+                for (unsigned char k = 0; k < 4; ++k) {
+                    data[col * 4 + row] += first[k * 4 + row] * second[col * 4 + k];
+                }
+            }
+        }
+        return mat; // return the result by reference
+    }
     Vec4<float> GetRow(int row){
         Vec4<float> r(m_Data[row * 4] + 0, m_Data[row * 4] + 1,m_Data[row * 4] + 2,m_Data[row * 4] + 3);
         return r;

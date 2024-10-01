@@ -5,6 +5,7 @@
 #include "Rendering/Shaders/ChunkShader.h"
 #include "Rendering/Shaders/PointShader.h"
 #include "Rendering/Textures/Texture.h"
+#include "Math/Frustum.h"
 
 //Caves have regions
 //Regions have chunks
@@ -18,7 +19,7 @@ public:
 
     void Draw() const;
 
-    void LoadViewMatrix(float* data) const noexcept;
+    void LoadViewMatrix(float* data) noexcept;
 
     void TogglePolygonMode(){m_PolygonMode = !m_PolygonMode;}
 
@@ -28,6 +29,7 @@ public:
 private:
     ChunkShader m_ChunkShader;
     PointShader m_PointShader;
+    Frustum m_Frustum;
     Texture m_Texture;
     Region m_Region;
     bool m_PolygonMode = false;

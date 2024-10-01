@@ -1,6 +1,7 @@
 #pragma once
 
 #include "pch.h"
+#include "Core.h"
 
 //All the data we directly give to the window
 struct WindowData{
@@ -8,7 +9,7 @@ struct WindowData{
     int m_Y = 0;
     int m_Width = 1280;
     int m_Height = 720;
-    const char* m_Title = "ChasmicCaverns";
+    const char* m_Title = GAME_NAME;
     bool m_VsyncEnabled = false;
 };
 

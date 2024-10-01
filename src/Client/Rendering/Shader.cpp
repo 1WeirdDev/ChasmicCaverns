@@ -96,8 +96,12 @@ void Shader::BindAttribute(GLint index, const char* name) const{
     glBindAttribLocation(m_ProgramId, index, name);
 }
 
-int Shader::GetUniformLocation(const char* name) const{
+GLint Shader::GetUniformLocation(const char* name) const{
     return glGetUniformLocation(m_ProgramId, name);
+}
+
+GLint Shader::GetBlockIndex(const char* name) const{
+    return glGetUniformBlockIndex(m_ProgramId, name);
 }
 void Shader::LoadMat4x4(GLint location, float* value) noexcept{
     glUniformMatrix4fv(location, 1, false, value);

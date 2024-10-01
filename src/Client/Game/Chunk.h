@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Rendering/Mesh/TexturedMesh.h"
+#include "Rendering/Mesh/ChunkMesh.h"
 #include "Rendering/Mesh/PointMesh.h"
 #include "Math/Mat4x4.h"
 #include "Math/Vec3.h"
@@ -22,6 +22,7 @@ public:
     static constexpr uint8_t ChunkHeight = 20;
     static constexpr uint16_t ChunkWidthSquared = ChunkWidth * ChunkWidth;
     static constexpr uint8_t PointScale = 8;
+    static constexpr float ChunkScale = 0.4f;
 public:
     Chunk();
     ~Chunk();
@@ -37,6 +38,7 @@ public:
     void Draw() const;
 
     uint8_t GetPointId(uint8_t x, uint8_t y, uint8_t z) const noexcept;
+    uint8_t GetPointIdFromVertexPos(uint8_t x, uint8_t y, uint8_t z) const noexcept;
     bool IsPointEnabled(uint8_t x, uint8_t y, uint8_t z) const noexcept;
     void SetPointId(uint8_t x, uint8_t y, uint8_t z, uint8_t id) noexcept;
 
@@ -45,19 +47,19 @@ private:
     void CreateDouble(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
     void CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
 private:
-    void AddVertex(uint8_t x, uint8_t y, uint8_t z) noexcept;
+    void AddVertex(uint8_t x, uint8_t y, uint8_t z, uint8_t color) noexcept;
     void AddFaces(uint8_t amount);
     void CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
+
 private:
     std::array<uint8_t, ChunkWidth * ChunkWidth * ChunkHeight> m_PointData;
 private:
     //Position in chunks not global position
     Vec3<int8_t> m_Position;
     Mat4x4 m_TransformationMatrix;
-    TexturedMesh m_Mesh;
+    ChunkMesh m_Mesh;
     std::vector<uint8_t> m_Vertices;
     std::vector<uint16_t> m_Indices;
-    std::vector<uint8_t> m_TextureCoords;
     uint16_t m_VertexIndex = 0;
     //Debug
 #ifndef DIST

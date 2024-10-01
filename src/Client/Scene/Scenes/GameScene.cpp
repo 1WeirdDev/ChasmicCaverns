@@ -43,15 +43,6 @@ void GameScene::Init() {
     m_FPSLabel->SetPosition(0,1, 0, -100);
     m_FPSLabel->SetSize(0.2f, 0.1f, 0, 0);
 
-    //m_PointShader.LoadTransformationMatrix(mat.GetData());
-
-    //m_Cave.Init();
-    //m_Chunk.CreatePointData();
-    //m_Chunk.CreateMeshData();
-    //m_Chunk.CreateMesh();
-//
-    //m_Chunk.SetPosition(0, 0, 0);
-    //m_Player.Init();
     m_Cave.Init();
     Window::SetBackgroundColor(0.5f, 0.5f, 0.5f);
 }
@@ -71,7 +62,7 @@ void GameScene::Update() {
 void GameScene::Draw() {
     m_Player.Draw();
     m_Cave.Draw();
-    //
+    
     glClear(GL_DEPTH_BUFFER_BIT);
     m_Gui.Draw();
 }

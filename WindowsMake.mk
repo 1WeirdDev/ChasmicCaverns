@@ -18,6 +18,8 @@ SHADERS_SRC = $(SRC_DIR)Rendering/Shaders/
 SCENES_DIR = $(SRC_DIR)Scene/Scenes/
 MESH_DIR = $(RENDERING_SRC)Mesh/
 Files += $(SRC_DIR)Game.cpp $(SRC_DIR)Input/Input.cpp $(SRC_DIR)Entity/Player.cpp $(SRC_DIR)Math/MatrixUtils.cpp $(SRC_DIR)/Rendering/Window.cpp $(SRC_DIR)Core/Time.cpp $(SRC_DIR)Core/Logger.cpp $(SRC_DIR)Rendering/Shader.cpp
+#Math
+Files += $(SRC_DIR)Math/Frustum.cpp
 #Scenes
 Files += $(SRC_DIR)Scene/Scene.cpp $(SRC_DIR)Scene/SceneManager.cpp
 Files += $(SCENES_DIR)MainMenuScene.cpp $(SCENES_DIR)GameScene.cpp
@@ -26,7 +28,7 @@ Files += $(SRC_DIR)Game/Cave.cpp $(SRC_DIR)Game/Region.cpp $(SRC_DIR)Game/Chunk.
 #Textures
 Files += $(SRC_DIR)Rendering/Textures/Texture.cpp
 #Meshes
-Files += $(MESH_DIR)TexturedMesh.cpp $(MESH_DIR)BasicMesh.cpp $(MESH_DIR)PointMesh.cpp
+Files += $(MESH_DIR)ChunkMesh.cpp $(MESH_DIR)TexturedMesh.cpp $(MESH_DIR)BasicMesh.cpp $(MESH_DIR)PointMesh.cpp
 #Shaders
 Files += $(SHADERS_SRC)ChunkShader.cpp $(SHADERS_SRC)PointShader.cpp $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
 #GUI

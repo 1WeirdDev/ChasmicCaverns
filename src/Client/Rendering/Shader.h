@@ -18,7 +18,7 @@ public:
 
     void BindAttribute(GLint index, const char* name) const;
     GLint GetUniformLocation(const char* name) const;
-
+    GLint GetBlockIndex(const char* name) const;
 public:
     GLint GetProgramId() const {return m_ProgramId;}
     GLint GetVertexShaderId() const {return m_VertexShaderId;}

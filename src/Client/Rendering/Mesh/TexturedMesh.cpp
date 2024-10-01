@@ -1,5 +1,6 @@
 #include "pch.h"
 
+#include "Core/Logger.h"
 #include "TexturedMesh.h"
 
 void TexturedMesh::CleanUp(){
@@ -19,9 +20,7 @@ void TexturedMesh::BindVao() const{
 void TexturedMesh::Create(unsigned char dimensions, VertexType vertexType, IndexType indexType, VertexType textureCoordType, void* vertices, void* indices, void* textureCoords, size_t vertexCount, size_t indexCount, size_t textureCoordCount){
     CORE_DEBUG("CREATING TEXTUREDD  MESH \n");
     glGenVertexArrays(1, &m_VaoId);
-    glGenBuffers(1, &m_VboId);
-    glGenBuffers(2, &m_EboId);
-    glGenBuffers(2, &m_TboId);
+    glGenBuffers(3, &m_VboId);
 
     GLuint glVertexType = vertexType + 0x1400;    //GL HAS OFFSET 0x1400
     GLuint dataSize = 0;

@@ -7,7 +7,7 @@
 class Cave;
 class Region{
 public:
-    static constexpr uint8_t RegionChunkWidth = 1;
+    static constexpr uint8_t RegionChunkWidth = 15;
     Region();
     ~Region();
 

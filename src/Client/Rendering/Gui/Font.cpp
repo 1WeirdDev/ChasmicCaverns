@@ -3,6 +3,7 @@
 #include "Core.h"
 
 #include "UI.h"
+#include "Core/Logger.h"
 #include "UIDisplayManager.h"
 
 Font::~Font()
@@ -127,9 +128,6 @@ void Font::LoadFont(const char *location)
     //Create buffers
     glGenBuffers(2, &m_SSBO_Id);
 
-    if(!glIsProgram(m_Shader.GetProgramId())){
-        CORE_WARN("NOT PROGRAM");
-    }
     //We only care about the first 128 charcte
     glBindBuffer(GL_SHADER_STORAGE_BUFFER, m_SSBO_Id);
     glBufferData(GL_SHADER_STORAGE_BUFFER, sizeof(CharacterDrawData) * 127 , nullptr, GL_STATIC_DRAW);
