@@ -30,7 +30,7 @@ Files += $(SRC_DIR)Rendering/Textures/Texture.cpp
 #Meshes
 Files += $(MESH_DIR)ChunkMesh.cpp $(MESH_DIR)TexturedMesh.cpp $(MESH_DIR)BasicMesh.cpp $(MESH_DIR)PointMesh.cpp
 #Shaders
-Files += $(SHADERS_SRC)ChunkShader.cpp $(SHADERS_SRC)PointShader.cpp $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
+Files += $(SHADERS_SRC)ChunkDebugShader.cpp $(SHADERS_SRC)ChunkShader.cpp $(SHADERS_SRC)PointShader.cpp $(SHADERS_SRC)UIFrameShader.cpp $(SHADERS_SRC)UIImageShader.cpp $(SHADERS_SRC)UITextShader.cpp
 #GUI
 GUI_DIR = $(SRC_DIR)Rendering/Gui/
 Files += $(GUI_DIR)Font.cpp $(GUI_DIR)UIDisplayManager.cpp $(GUI_DIR)UI.cpp $(GUI_DIR)UIS/Image.cpp $(GUI_DIR)UIS/TextLabel.cpp $(GUI_DIR)Gui.cpp $(GUI_DIR)UIs/Button.cpp

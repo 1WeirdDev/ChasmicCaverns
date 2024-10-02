@@ -22,7 +22,7 @@ public:
     static constexpr uint8_t ChunkHeight = 20;
     static constexpr uint16_t ChunkWidthSquared = ChunkWidth * ChunkWidth;
     static constexpr uint8_t PointScale = 8;
-    static constexpr float ChunkScale = 0.4f;
+    static constexpr float ChunkScale = 2.0f;
 public:
     Chunk();
     ~Chunk();

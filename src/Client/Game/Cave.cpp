@@ -21,6 +21,9 @@ void Cave::Init(){
     m_PointShader.Start();
     m_PointShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
 
+    m_DebugShader.Create();
+    m_DebugShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
+
     m_Region.SetCave(this);
     m_Region.CreateChunks();
 
@@ -38,6 +41,8 @@ void Cave::LoadViewMatrix(float* data) noexcept{
     m_ChunkShader.LoadViewMatrix(data);
     m_PointShader.Start();
     m_PointShader.LoadViewMatrix(data);
+    m_DebugShader.Start();
+    m_DebugShader.LoadViewMatrix(data);
 
     Mat4x4 view(data);
     Mat4x4 progViewMatrix = Game::GetProjectionMatrix() * view;
