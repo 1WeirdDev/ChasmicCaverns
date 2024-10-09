@@ -11,17 +11,20 @@ Chunk::~Chunk(){
 void Chunk::CreatePointData(){
     memset(m_PointData.data(), 0, sizeof(m_PointData));
     SetPointId(0,1,1, 2);
-    SetPointId(2,1,0, 1);
+    SetPointId(2,1,0, 2);
+    SetPointId(2,0,0, 1);
+    SetPointId(1,0,0, 1);
     SetPointId(3,1,1, 1);
     
     SetPointId(2,1,2, 2);
     
     srand(time(NULL));
+    int max = 5;
     int modified_blocks = 0;
     for(unsigned char y = 0; y < ChunkWidth; y++){
         for(unsigned char z = 0; z < ChunkWidth; z++){
             for(unsigned char x = 0; x < ChunkWidth; x++){
-                if(modified_blocks > 5)return;
+                if(modified_blocks >= max)return;
                 int value = rand() % 15;
                 if(value > 0)modified_blocks ++;
                 SetPointId(x, y, z, value > 0 ? 1 : 0);

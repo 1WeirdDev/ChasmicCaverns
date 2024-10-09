@@ -22,7 +22,7 @@ public:
     static constexpr uint8_t ChunkHeight = 20;
     static constexpr uint16_t ChunkWidthSquared = ChunkWidth * ChunkWidth;
     static constexpr uint8_t PointScale = 8;
-    static constexpr float ChunkScale = 2.0f;
+    static constexpr float ChunkScale = 1.0f;
 public:
     Chunk();
     ~Chunk();
@@ -46,6 +46,7 @@ public:
 private:
     void CreateDouble(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
     void CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
+    void CreateTriple(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId);
 private:
     void AddVertex(uint8_t x, uint8_t y, uint8_t z, uint8_t color) noexcept;
     void AddFaces(uint8_t amount);
