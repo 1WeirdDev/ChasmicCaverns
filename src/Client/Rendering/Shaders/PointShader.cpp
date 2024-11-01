@@ -16,7 +16,7 @@ void PointShader::Create(){
     void main(){\
     if(enabled > 0)pointColor = vec3(1.0, 1.0, 1.0);\
     else pointColor = vec3(0.0, 0.0, 0.0); \
-    gl_Position = projMatrix * viewMatrix  * vec4(scale * vertex, 1.0);}";
+    gl_Position = projMatrix * viewMatrix * transformationMatrix * vec4(vertex, 1.0);}";
 
     const char* fragmentShaderData = "#version 330 core\n \
     in vec3 pointColor; \n \
@@ -30,8 +30,6 @@ void PointShader::Create(){
     m_TransformationMatrixLocation = GetUniformLocation("transformationMatrix");
     m_ScaleLocation = GetUniformLocation("scale");
     m_PositionLocation = GetUniformLocation("position");
-
-    LoadScale(1.0f/ 8.0f);
 }
 
 void PointShader::LoadProjectionMatrix(float* data) const noexcept{

@@ -18,7 +18,6 @@ void Cave::Init(){
     m_ChunkShader.LoadColor(0, 0.5, 0.5, 0.0);
     m_ChunkShader.LoadColor(1, 0.5, 0.5, 0.0);
     m_ChunkShader.LoadColor(2, 2.0f / 255.0f, 48.0f / 255.0f, 32.0f / 255.0f);
-    
     m_PointShader.Start();
     m_PointShader.LoadProjectionMatrix(Game::GetProjectionMatrix().GetData());
 

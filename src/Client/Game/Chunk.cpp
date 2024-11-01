@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Chunk.h"
 
-#include "Core/Logger.h"
 #include "Math/MatrixUtils.h"
 
 Chunk::Chunk(){}
@@ -65,11 +64,6 @@ void Chunk::CreateMeshData(){
     }
     
 #ifndef DIST
-    m_PointVertexIndex = 0;
-    m_PointVertices.resize(0);
-    m_PointIndices.resize(0);
-
-    //PointScale = 0;
     for(uint8_t y = 0; y < ChunkHeight; y++){
         for(uint8_t z = 0; z < ChunkWidth; z++){
             for(uint8_t x = 0; x < ChunkWidth; x++){
@@ -216,15 +210,13 @@ void Chunk::SetPosition(int8_t x, int8_t y, int8_t z){
     m_Position.SetXYZ(x, y, z);
 
     //We invert the z axis for the transformation matrix and add The chunkWidth to compensate
- 
-    float hMultiplier = ChunkWidth * ChunkScale;
-    float vMultiplier = ChunkHeight * ChunkScale;
-    MatrixUtils::TranslateMat4x4(m_TransformationMatrix.GetData(), Vec3<float>(x * hMultiplier, y * vMultiplier, z * hMultiplier));
+    z+= 1;
+    MatrixUtils::TranslateMat4x4(m_TransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth * ChunkScale, y * ChunkHeight * ChunkScale, z * ChunkWidth * ChunkScale));
     float scale = 0.5f * ChunkScale;
-    MatrixUtils::ScaleMat4x4(m_TransformationMatrix.GetData(), scale , scale, scale);
+    MatrixUtils::ScaleMat4x4(m_TransformationMatrix.GetData(), scale , scale, -scale);
 
 #ifndef DIST
-    MatrixUtils::TranslateMat4x4(m_PointTransformationMatrix.GetData(), Vec3<float>(x * hMultiplier, y * vMultiplier, z * hMultiplier));
+    MatrixUtils::TranslateMat4x4(m_PointTransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth * ChunkScale, y * ChunkHeight * ChunkScale, z * ChunkWidth * ChunkScale));
     scale = (1.0f / PointScale) * ChunkScale;
     MatrixUtils::ScaleMat4x4(m_PointTransformationMatrix.GetData(), scale , scale, -scale);
 #endif
