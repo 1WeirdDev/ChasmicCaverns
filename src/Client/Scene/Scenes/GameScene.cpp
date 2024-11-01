@@ -27,7 +27,7 @@ void GameScene::Init() {
     unsigned int indices[6]{
         0,1,2,2,1,3
     };
-    m_BasicMesh.Create(3, VT_FLOAT, FT_UINT32, &vertices, &indices, 12, 6);
+    m_BasicMesh.Create(3, VertexType::Float, IndexType::UInt32, &vertices, &indices, 12, 6);
     
     Frame* f = m_Gui.CreateChild<Frame>();
     f->SetSize(0.25f, 0.25f, 0, 0);

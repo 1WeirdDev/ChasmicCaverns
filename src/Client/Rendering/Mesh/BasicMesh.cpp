@@ -16,28 +16,28 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
     glGenVertexArrays(1, &m_VaoId);
     glGenBuffers(2, &m_VboId);
     
-    unsigned int glVertexType = vertexType + 0x1400;    //GL HAS OFFSET 0x1400
+    unsigned int glVertexType = (int)vertexType + 0x1400;    //GL HAS OFFSET 0x1400
     unsigned int dataSize = 0;
     switch(vertexType){
-    case VT_INT8:
+    case VertexType::Int8:
         dataSize = sizeof(int8_t);
         break;
-    case VT_UINT8:
+    case VertexType::UInt8:
         dataSize = sizeof(uint8_t);
         break;
-    case VT_INT16:
+    case VertexType::Int16:
         dataSize = sizeof(int16_t);
         break;
-    case VT_UINT16:
+    case VertexType::UInt16:
         dataSize = sizeof(uint16_t);
         break;
-    case VT_INT32:
+    case VertexType::Int32:
         dataSize = sizeof(int32_t);
         break;
-    case VT_UINT32:
+    case VertexType::UInt32:
         dataSize = sizeof(uint32_t);
         break;
-    case VT_FLOAT:
+    case VertexType::Float:
         dataSize = sizeof(float);
         break;
     }
@@ -51,15 +51,15 @@ void BasicMesh::Create(unsigned char dimensions, VertexType vertexType, IndexTyp
     glVertexAttribPointer(0, dimensions, glVertexType, false, 0, nullptr);
 
     switch(indexType){ 
-    case FT_UINT8:
+    case IndexType::UInt8:
         dataSize = sizeof(uint8_t);
         m_GLIndexType = GL_UNSIGNED_BYTE;
         break;
-    case FT_UINT16:
+    case IndexType::UInt16:
         dataSize = sizeof(uint16_t);
         m_GLIndexType = GL_UNSIGNED_SHORT;
         break;
-    case FT_UINT32:
+    case IndexType::UInt32:
         dataSize = sizeof(uint32_t);
         m_GLIndexType = GL_UNSIGNED_INT;
         break;

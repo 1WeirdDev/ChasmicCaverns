@@ -28,7 +28,7 @@ void Region::Draw() const{
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     bool polygonMode = m_Cave->IsPolygonMode();
     if(polygonMode){
-        glDisable(GL_CULL_FACE);
+        //glDisable(GL_CULL_FACE);
         pointShader.Start();
 
         for(uint8_t i = 0; i < m_Chunks.size(); i++){

@@ -1,22 +1,19 @@
 #pragma once
 
-enum VertexType{
-    VT_INT8 = 0,
-    VT_UINT8,
+enum class VertexType{
+    Int8 = 0,
+    UInt8,
 
-    VT_INT16,
-    VT_UINT16,
-    
-    VT_INT32,
-    VT_UINT32,
+    Int16,
+    UInt16,
 
-    VT_FLOAT
+    Int32,
+    UInt32,
+
+    Float
 };
-
-enum IndexType{
-    FT_UINT8 = 0,
-
-    FT_UINT16,
-
-    FT_UINT32,
+enum class IndexType{
+    UInt8 = 1,
+    UInt16 = 3,
+    UInt32 = 5
 };
