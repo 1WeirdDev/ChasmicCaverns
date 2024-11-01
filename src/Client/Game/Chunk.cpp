@@ -10,16 +10,19 @@ Chunk::~Chunk(){
 
 void Chunk::CreatePointData(){
     memset(m_PointData.data(), 0, sizeof(m_PointData));
+    SetPointId(0,0,0, 2);
+    SetPointId(1,0,0, 2);
+    SetPointId(1,0,1, 2);
     SetPointId(0,1,1, 2);
     SetPointId(2,1,0, 2);
     SetPointId(2,0,0, 1);
     SetPointId(1,0,0, 1);
     SetPointId(3,1,1, 1);
-    
-    SetPointId(2,1,2, 2);
+    //
+    //etPointId(2,1,2, 2);
     
     srand(time(NULL));
-    int max = 5;
+    int max = 0;
     int modified_blocks = 0;
     for(unsigned char y = 0; y < ChunkWidth; y++){
         for(unsigned char z = 0; z < ChunkWidth; z++){
@@ -210,14 +213,14 @@ void Chunk::SetPosition(int8_t x, int8_t y, int8_t z){
     m_Position.SetXYZ(x, y, z);
 
     //We invert the z axis for the transformation matrix and add The chunkWidth to compensate
-    z+= 1;
+    //z+= 1;
     MatrixUtils::TranslateMat4x4(m_TransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth * ChunkScale, y * ChunkHeight * ChunkScale, z * ChunkWidth * ChunkScale));
     float scale = 0.5f * ChunkScale;
-    MatrixUtils::ScaleMat4x4(m_TransformationMatrix.GetData(), scale , scale, -scale);
+    MatrixUtils::ScaleMat4x4(m_TransformationMatrix.GetData(), scale , scale, scale);
 
 #ifndef DIST
     MatrixUtils::TranslateMat4x4(m_PointTransformationMatrix.GetData(), Vec3<float>(x * ChunkWidth * ChunkScale, y * ChunkHeight * ChunkScale, z * ChunkWidth * ChunkScale));
     scale = (1.0f / PointScale) * ChunkScale;
-    MatrixUtils::ScaleMat4x4(m_PointTransformationMatrix.GetData(), scale , scale, -scale);
+    MatrixUtils::ScaleMat4x4(m_PointTransformationMatrix.GetData(), scale , scale, scale);
 #endif
 }

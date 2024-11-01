@@ -29,8 +29,8 @@ void Chunk::AddFaces(uint8_t amount)
     for (uint8_t f = 0; f < amount; f++)
     {
         m_Indices.push_back(m_VertexIndex + 0);
-        m_Indices.push_back(m_VertexIndex + 1);
         m_Indices.push_back(m_VertexIndex + 2);
+        m_Indices.push_back(m_VertexIndex + 1);
         m_VertexIndex += 3;
     }
 }
@@ -75,13 +75,7 @@ void Chunk::CreateData(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
         }
         break;
     case 4:
-        switch(blockId){
-        case 0b11000110:
-            //AddVertex(x, y, z);
-            CreateTriple(x, y, z, 0b11000100);
-            CreateSingle(x, y, z, 0b10);
-            break;
-        }
+        CreateQuadruple(x, y, z, blockId);
         break;
     case 7:
         switch(blockId){
@@ -175,6 +169,10 @@ void Chunk::CreateDouble(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId){
         CreateSingle(x, y, z, 0b000001000);
         CreateSingle(x, y, z, 0b000100000);
         break;
+    case 0b10000100:
+        CreateSingle(x, y, z, 0b10000000);
+        CreateSingle(x, y, z, 0b00000100);
+        break;
     default:
         PrintUnidentifiedCase(2, blockId);
         break;
@@ -240,6 +238,21 @@ void Chunk::CreateSingle(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId)
 
 void Chunk::CreateTriple(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId){
     switch(blockId){
+        case 0b01000101:
+            AddVertex(x, y + 1, z, GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+            AddVertex(x + 2, y + 1, z, GetPointIdFromVertexPos(x + 2, y, z));
+
+            AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+            AddVertex(x, y, z + 1, GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x + 1, y, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+            
+            AddVertex(x, y + 1, z, GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x, y, z + 1, GetPointIdFromVertexPos(x, y, z));
+            AddVertex(x + 2, y + 1, z + 2, GetPointIdFromVertexPos(x + 2, y, z + 2));
+
+            AddFaces(3);
+            break;
         case 0b01001100:
             AddVertex(x, y, z + 1, GetPointIdFromVertexPos(x, y, z));
             AddVertex(x + 2, y, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
@@ -278,5 +291,40 @@ void Chunk::CreateTriple(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId){
         default:
             PrintUnidentifiedCase(3, blockId);
             break;
+    }
+}
+
+void Chunk::CreateQuadruple(uint8_t x, uint8_t y, uint8_t z, uint8_t blockId){
+    switch(blockId){
+    case 0b11000110:
+        //AddVertex(x, y, z);
+        CreateTriple(x, y, z, 0b11000100);
+        CreateSingle(x, y, z, 0b10);
+        break;
+    case 0b01100101:
+        CreateSingle(x, y, z, 0b00100000);
+        CreateTriple(x, y, z, 0b01000101);
+        break;
+    case 0b01011100:
+        AddVertex(x + 1, y + 2, z, GetPointIdFromVertexPos(x + 2, y + 2, z + 2));
+        AddVertex(x, y + 1, z, GetPointIdFromVertexPos(x, y, z));
+        AddVertex(x, y + 1, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+
+        AddVertex(x, y + 1, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+        AddVertex(x + 2, y + 2, z + 1, GetPointIdFromVertexPos(x + 2, y + 2, z));
+        AddVertex(x + 1, y + 2, z, GetPointIdFromVertexPos(x, y + 2, z + 2));
+
+        AddVertex(x, y + 1, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+        AddVertex(x + 2, y, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(x + 2, y + 2, z + 1, GetPointIdFromVertexPos(x + 2, y + 2, z));
+
+        AddVertex(x + 1, y, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+        AddVertex(x + 2, y, z + 1, GetPointIdFromVertexPos(x + 2, y, z));
+        AddVertex(x, y + 1, z + 2, GetPointIdFromVertexPos(x, y, z + 2));
+        AddFaces(4);
+        break;
+    default:
+        PrintUnidentifiedCase(4, blockId);
+        break;
     }
 }
