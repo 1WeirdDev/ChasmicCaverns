@@ -1,0 +1,5 @@
+IDEA
+
+A game with marching cubejs as cave and you try to go deeper into the cave
+There are regions and at the end of the region is a drop into the next
+there are psuedo generated maps and entities and defenese
