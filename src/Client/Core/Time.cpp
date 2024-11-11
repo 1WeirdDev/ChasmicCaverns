@@ -1,6 +1,7 @@
 #include "pch.h"
 
 #include "Time.h"
+#include "Core/Logger.h"
 
 std::chrono::high_resolution_clock::time_point Time::s_FrameStart;
 std::chrono::high_resolution_clock::time_point Time::s_LastFrameStart;
